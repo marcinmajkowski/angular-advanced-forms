@@ -5,11 +5,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
+import { VariantCardComponent } from './offer-configurator/variant-card/variant-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OfferConfiguratorComponent
+    OfferConfiguratorComponent,
+    VariantCardComponent
   ],
   imports: [
     BrowserModule,

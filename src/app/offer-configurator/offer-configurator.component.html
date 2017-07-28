@@ -1,4 +1,7 @@
 <h1>Offer configurator</h1>
-<p>
-  offer-configurator works!
-</p>
+<div class="card-deck">
+  <div app-variant-card
+       class="card text-center"
+       *ngFor="let variant of variants"
+       [name]="variant"></div>
+</div>
