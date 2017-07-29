@@ -1,0 +1,22 @@
+import { Component, Directive, OnInit, ViewEncapsulation } from '@angular/core';
+
+@Directive({
+  selector: 'div[appLabelsCard]',
+  host: {'class': 'app-labels-card'}
+})
+export class LabelsCardComponentStyler { }
+
+@Component({
+  selector: 'div[appLabelsCard]',
+  templateUrl: './labels-card.component.html',
+  styleUrls: ['./labels-card.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+})
+export class LabelsCardComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
