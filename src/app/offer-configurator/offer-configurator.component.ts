@@ -28,4 +28,11 @@ export class OfferConfiguratorComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSelected(variantIndex: number) {
+    this.variants
+      .filter(variant => variant.state === VariantState.SELECTED)
+      .forEach(variant => variant.state = VariantState.ENABLED);
+    this.variants[variantIndex].state = VariantState.SELECTED;
+  }
+
 }

@@ -4,7 +4,8 @@
     <app-variant-labels></app-variant-labels>
   </div>
   <div class="col"
-       *ngFor="let variant of variants">
-    <app-variant [variant]="variant"></app-variant>
+       *ngFor="let variant of variants; let i = index">
+    <app-variant [variant]="variant"
+                 (selected)="onSelected(i)"></app-variant>
   </div>
 </div>

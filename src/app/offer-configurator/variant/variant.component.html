@@ -28,7 +28,8 @@
     <button class="btn"
             [class.btn-primary]="!isSelected"
             [class.btn-info]="isSelected"
-            [disabled]="isDisabled">
+            [disabled]="isDisabled"
+            (click)="onSelect()">
       {{ isSelected ? 'Selected' : 'Select' }}
     </button>
   </div>

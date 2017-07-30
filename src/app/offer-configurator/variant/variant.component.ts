@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Variant } from './variant.model';
 import { VariantState } from './variant-state.model';
 
@@ -11,6 +11,8 @@ export class VariantComponent implements OnInit {
 
   @Input() variant: Variant;
 
+  @Output() selected = new EventEmitter<void>();
+
   get isDisabled(): boolean {
     return this.variant.state === VariantState.DISABLED;
   }
@@ -22,6 +24,10 @@ export class VariantComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSelect() {
+    this.selected.emit();
   }
 
 }
