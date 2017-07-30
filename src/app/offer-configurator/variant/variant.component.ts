@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-variant',
-  templateUrl: './variant-card.component.html',
-  styleUrls: ['./variant-card.component.scss']
+  templateUrl: './variant.component.html',
+  styleUrls: ['./variant.component.scss']
 })
-export class VariantCardComponent implements OnInit {
+export class VariantComponent implements OnInit {
 
   @Input() name: string;
 

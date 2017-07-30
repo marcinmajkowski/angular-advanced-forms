@@ -5,15 +5,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
-import { VariantCardComponent } from './offer-configurator/variant-card/variant-card.component';
-import { LabelsCardComponent } from './offer-configurator/labels-card/labels-card.component';
+import { VariantComponent } from './offer-configurator/variant/variant.component';
+import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OfferConfiguratorComponent,
-    VariantCardComponent,
-    LabelsCardComponent,
+    VariantComponent,
+    VariantLabelsComponent,
   ],
   imports: [
     BrowserModule,

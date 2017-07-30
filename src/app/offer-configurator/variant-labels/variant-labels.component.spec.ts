@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VariantCardComponent } from './variant-card.component';
+import { VariantLabelsComponent } from './variant-labels.component';
 
-describe('VariantCardComponent', () => {
-  let component: VariantCardComponent;
-  let fixture: ComponentFixture<VariantCardComponent>;
+describe('VariantLabelsComponent', () => {
+  let component: VariantLabelsComponent;
+  let fixture: ComponentFixture<VariantLabelsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VariantCardComponent ]
+      declarations: [ VariantLabelsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VariantCardComponent);
+    fixture = TestBed.createComponent(VariantLabelsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
