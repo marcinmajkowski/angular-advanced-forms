@@ -1,3 +1,13 @@
 div.variant-column {
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+div.variant-column:hover {
+  // TODO replace with primary color variable
+  border-color: rgb(2, 117, 216);
+}
+
+div.variant-column.variant-column-selected {
+  // TODO replace with primary color variable
+  border-color: rgb(2, 117, 216);
 }
