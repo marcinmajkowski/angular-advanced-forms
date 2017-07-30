@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Variant } from './variant.model';
+import { VariantState } from './variant-state.model';
 
 @Component({
   selector: 'app-variant',
@@ -7,7 +9,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class VariantComponent implements OnInit {
 
-  @Input() name: string;
+  @Input() variant: Variant;
+
+  get isDisabled(): boolean {
+    return this.variant.state === VariantState.DISABLED;
+  }
+
+  get isSelected(): boolean {
+    return this.variant.state === VariantState.SELECTED;
+  }
 
   constructor() { }
 

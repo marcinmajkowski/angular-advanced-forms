@@ -1,6 +1,9 @@
-<div class="text-center variant-column rounded py-3">
+<div class="text-center variant-column rounded pt-3"
+     [class.bg-faded]="isDisabled"
+     [class.bg-info]="isSelected"
+     [class.text-white]="isSelected">
   <div>
-    <h4>{{ name }}</h4>
+    <h4>{{ variant.name }}</h4>
     <p>variant</p>
   </div>
   <hr/>
@@ -20,8 +23,13 @@
     </p>
   </div>
   <hr/>
-  <div>
-    <h5>$5,000</h5>
-    <button class="btn btn-primary">Select</button>
+  <div class="pb-3">
+    <h5>${{ variant.price }}</h5>
+    <button class="btn"
+            [class.btn-primary]="!isSelected"
+            [class.btn-info]="isSelected"
+            [disabled]="isDisabled">
+      {{ isSelected ? 'Selected' : 'Select' }}
+    </button>
   </div>
 </div>

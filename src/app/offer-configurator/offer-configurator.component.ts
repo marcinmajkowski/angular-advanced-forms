@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Variant } from './variant/variant.model';
+import { VariantState } from './variant/variant-state.model';
 
 @Component({
   selector: 'app-offer-configurator',
@@ -7,7 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfferConfiguratorComponent implements OnInit {
 
-  variants = ['First', 'Second', 'Third'];
+  variants: Variant[] = [{
+    name: 'First',
+    state: VariantState.SELECTED,
+    price: 10,
+  }, {
+    name: 'Second',
+    state: VariantState.ENABLED,
+    price: 15,
+  }, {
+    name: 'Third',
+    state: VariantState.DISABLED,
+    price: 20,
+  }];
 
   constructor() { }
 
