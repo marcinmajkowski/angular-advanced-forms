@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'div.card[appVariantCard]',
+  selector: 'app-variant',
   templateUrl: './variant-card.component.html',
   styleUrls: ['./variant-card.component.scss']
 })

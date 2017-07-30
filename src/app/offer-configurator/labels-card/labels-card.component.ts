@@ -1,16 +1,9 @@
-import { Component, Directive, OnInit, ViewEncapsulation } from '@angular/core';
-
-@Directive({
-  selector: 'div.card[appLabelsCard]',
-  host: {'class': 'app-labels-card'}
-})
-export class LabelsCardComponentStyler { }
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'div.card[appLabelsCard]',
+  selector: 'app-variant-labels',
   templateUrl: './labels-card.component.html',
   styleUrls: ['./labels-card.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class LabelsCardComponent implements OnInit {
 

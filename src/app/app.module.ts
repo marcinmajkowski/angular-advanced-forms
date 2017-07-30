@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
 import { VariantCardComponent } from './offer-configurator/variant-card/variant-card.component';
-import { LabelsCardComponent, LabelsCardComponentStyler } from './offer-configurator/labels-card/labels-card.component';
+import { LabelsCardComponent } from './offer-configurator/labels-card/labels-card.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,6 @@ import { LabelsCardComponent, LabelsCardComponentStyler } from './offer-configur
     OfferConfiguratorComponent,
     VariantCardComponent,
     LabelsCardComponent,
-    LabelsCardComponentStyler,
   ],
   imports: [
     BrowserModule,
