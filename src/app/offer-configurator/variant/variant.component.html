@@ -1,26 +1,31 @@
-<div class="text-center variant-column rounded p-3"
-     [class.bg-faded]="isDisabled"
-     [class.variant-column-selected]="isSelected">
-  <div>
-    <h4>{{ variant.name }}</h4>
-    <p>variant</p>
-  </div>
-  <hr/>
-  <div *ngFor="let featureGroup of variant.featureGroups">
-    <h5>&nbsp;</h5>
-    <div *ngFor="let feature of featureGroup.features">
-      <p>{{ feature.name }}</p>
+<form (ngSubmit)="onSelect()"
+      #form="ngForm"
+      novalidate>
+  <div class="text-center variant-column rounded p-3"
+       [class.bg-faded]="isDisabled"
+       [class.variant-column-selected]="isSelected">
+    <div>
+      <h4>{{ variant.name }}</h4>
+      <p>variant</p>
+    </div>
+    <hr/>
+    <div *ngFor="let featureGroup of variant.featureGroups">
+      <h5>&nbsp;</h5>
+      <div *ngFor="let feature of featureGroup.features"
+           class="form-group">
+        <input class="form-control"
+               [disabled]="isDisabled">
+      </div>
+    </div>
+    <hr/>
+    <div>
+      <h5>${{ variant.price }}</h5>
+      <button class="btn btn-block"
+              [class.btn-primary]="!isSelected"
+              [class.btn-secondary]="isSelected"
+              [disabled]="!form.valid || isDisabled">
+        {{ isSelected ? '✓' : 'Select' }}
+      </button>
     </div>
   </div>
-  <hr/>
-  <div>
-    <h5>${{ variant.price }}</h5>
-    <button class="btn btn-block"
-            [class.btn-primary]="!isSelected"
-            [class.btn-secondary]="isSelected"
-            [disabled]="isDisabled"
-            (click)="onSelect()">
-      {{ isSelected ? '✓' : 'Select' }}
-    </button>
-  </div>
-</div>
+</form>
