@@ -7,7 +7,9 @@
   <div *ngFor="let featureGroup of featureGroups">
     <h5>{{ featureGroup.name }}</h5>
     <div *ngFor="let feature of featureGroup.features">
-      <p>{{ feature.name }}</p>
+      <p class="form-control-like">
+        {{ feature.name }}
+      </p>
     </div>
   </div>
   <hr/>
