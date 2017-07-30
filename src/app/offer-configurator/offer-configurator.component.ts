@@ -6,18 +6,33 @@ import { FeatureGroup } from './variant/feature/feature-group.model';
 const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
   name: 'First group',
   features: [{
-    name: 'Feature one'
+    name: 'Feature one',
+    value: 100,
+    min: 0,
+    max: 1000,
   }, {
-    name: 'Feature two'
+    name: 'Feature two',
+    value: 200,
+    min: 0,
+    max: 1000,
   }]
 }, {
   name: 'Second group',
   features: [{
-    name: 'Feature three'
+    name: 'Feature three',
+    value: 300,
+    min: 0,
+    max: 1000,
   }, {
-    name: 'Feature four'
+    name: 'Feature four',
+    value: 400,
+    min: 0,
+    max: 1000,
   }, {
-    name: 'Feature five'
+    name: 'Feature five',
+    value: 500,
+    min: 0,
+    max: 1000,
   }]
 }];
 

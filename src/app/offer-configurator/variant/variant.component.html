@@ -9,11 +9,16 @@
       <p>variant</p>
     </div>
     <hr/>
-    <div *ngFor="let featureGroup of variant.featureGroups">
+    <div *ngFor="let featureGroup of variant.featureGroups; let i = index">
       <h5>&nbsp;</h5>
-      <div *ngFor="let feature of featureGroup.features"
+      <div *ngFor="let feature of featureGroup.features; let j = index"
            class="form-group">
         <input class="form-control"
+               type="number"
+               [min]="feature.min"
+               [max]="feature.max"
+               [value]="values[i][j]"
+               required
                [disabled]="isDisabled">
       </div>
     </div>
