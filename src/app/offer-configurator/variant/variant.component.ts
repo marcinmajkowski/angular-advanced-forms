@@ -13,6 +13,8 @@ export class VariantComponent implements OnInit, OnChanges {
 
   @Output() selected = new EventEmitter<void>();
 
+  @Output() featureBlur = new EventEmitter<void>();
+
   values: number[][];
 
   get isDisabled(): boolean {
@@ -36,4 +38,7 @@ export class VariantComponent implements OnInit, OnChanges {
     this.selected.emit();
   }
 
+  onBlur() {
+    this.featureBlur.emit();
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
 import { VariantState } from './variant/variant-state.model';
 import { FeatureGroup } from './variant/feature/feature-group.model';
+import { VariantPriceService } from './variant-price.service';
 
 const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
   name: 'First group',
@@ -39,7 +40,8 @@ const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
 @Component({
   selector: 'app-offer-configurator',
   templateUrl: './offer-configurator.component.html',
-  styleUrls: ['./offer-configurator.component.scss']
+  styleUrls: ['./offer-configurator.component.scss'],
+  providers: [ VariantPriceService ],
 })
 export class OfferConfiguratorComponent implements OnInit {
 
@@ -60,16 +62,21 @@ export class OfferConfiguratorComponent implements OnInit {
     price: 20,
   }];
 
-  constructor() { }
+  constructor(private variantPriceService: VariantPriceService) { }
 
   ngOnInit() {
   }
 
-  onSelected(variantIndex: number) {
+  onSelected(selectedVariant: Variant) {
     this.variants
       .filter(variant => variant.state === VariantState.SELECTED)
       .forEach(variant => variant.state = VariantState.ENABLED);
-    this.variants[variantIndex].state = VariantState.SELECTED;
+    selectedVariant.state = VariantState.SELECTED;
+  }
+
+  onFeatureBlur(variant: Variant) {
+    this.variantPriceService.calculatePrice$(variant)
+      .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
   }
 
 }
