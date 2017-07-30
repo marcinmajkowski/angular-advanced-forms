@@ -1,7 +1,7 @@
 <h1 class="text-center my-5">Offer configurator</h1>
 <div class="row">
   <div class="col-5">
-    <app-variant-labels></app-variant-labels>
+    <app-variant-labels [featureGroups]="variants[0].featureGroups"></app-variant-labels>
   </div>
   <div class="col"
        *ngFor="let variant of variants; let i = index">

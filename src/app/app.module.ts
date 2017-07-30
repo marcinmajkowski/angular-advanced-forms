@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
 import { VariantComponent } from './offer-configurator/variant/variant.component';
 import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
+import { FeatureComponent } from './offer-configurator/variant/feature/feature.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { VariantLabelsComponent } from './offer-configurator/variant-labels/vari
     OfferConfiguratorComponent,
     VariantComponent,
     VariantLabelsComponent,
+    FeatureComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,20 +7,11 @@
     <p>variant</p>
   </div>
   <hr/>
-  <div>
-    <p>
-      First option
-    </p>
-  </div>
-  <div>
-    <p>
-      Second option
-    </p>
-  </div>
-  <div>
-    <p>
-      Third option
-    </p>
+  <div *ngFor="let featureGroup of variant.featureGroups">
+    <h5>&nbsp;</h5>
+    <div *ngFor="let feature of featureGroup.features">
+      <p>{{ feature.name }}</p>
+    </div>
   </div>
   <hr/>
   <div class="pb-3">
