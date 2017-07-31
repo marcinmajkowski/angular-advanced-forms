@@ -35,7 +35,7 @@
       <button class="btn btn-block"
               [class.btn-primary]="isSelected"
               [class.btn-secondary]="!isSelected"
-              [disabled]="!form.valid || isDisabled">
+              [disabled]="isDisabled">
         {{ isSelected ? '✓' : 'Select' }}
       </button>
     </div>
