@@ -21,7 +21,7 @@
                [max]="feature.max"
                [appMax]="feature.max"
                [ngModel]="feature.value"
-               (ngModelChange)="onFeatureValueChange(feature, $event)"
+               (ngModelChange)="onFeatureValueNgModelChange(i, j, $event)"
                name="{{i}}-{{j}}-feature-value"
                required
                (change)="onChange()"

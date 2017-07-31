@@ -96,4 +96,11 @@ export class OfferConfiguratorComponent implements OnInit {
   onFeatureChange(variant: Variant) {
     this.calculateVariant(variant);
   }
+
+  // FIXME controls lose focus
+  // https://stackoverflow.com/questions/42322968/angular2-dynamic-input-field-lose-focus-when-input-changes
+  onVariantUpdate(variantIndex: number, updatedVariant: Variant) {
+    this.variants[variantIndex].featureGroups = updatedVariant.featureGroups;
+    this.variantLimitsService.calculateLimits(this.variants[variantIndex]);
+  }
 }

@@ -8,6 +8,7 @@
     <app-variant [variant]="variant"
                  [isSelected]="variant === selectedVariant"
                  (featureChange)="onFeatureChange(variant)"
+                 (variantUpdate)="onVariantUpdate(i, $event)"
                  (selected)="onSelected(variant)"></app-variant>
   </div>
 </div>
