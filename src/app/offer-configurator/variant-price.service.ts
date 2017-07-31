@@ -16,7 +16,7 @@ export class VariantPriceService {
 
   calculatePrice$(variant: Variant): Observable<Variant> {
     return Observable.of(variant)
-      .delay(1000)
+      .delay(500)
       .map(originalVariant => ({
         ...originalVariant,
         price: priceForVariant(originalVariant)
