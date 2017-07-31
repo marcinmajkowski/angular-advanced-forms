@@ -31,8 +31,8 @@
     <div>
       <h5>${{ variant.price }}</h5>
       <button class="btn btn-block"
-              [class.btn-primary]="!isSelected"
-              [class.btn-secondary]="isSelected"
+              [class.btn-primary]="isSelected"
+              [class.btn-secondary]="!isSelected"
               [disabled]="!form.valid || isDisabled">
         {{ isSelected ? '✓' : 'Select' }}
       </button>
