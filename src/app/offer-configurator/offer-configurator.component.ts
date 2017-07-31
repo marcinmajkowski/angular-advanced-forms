@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
 import { FeatureGroup } from './variant/feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
+import 'rxjs/add/operator/finally';
 
 const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
   name: 'First group',
@@ -56,7 +57,7 @@ export class OfferConfiguratorComponent implements OnInit {
     price: 15,
   }, {
     name: 'Third',
-    isDisabled: true,
+    isDisabled: false,
     featureGroups: SAMPLE_FEATURE_GROUPS,
     price: 20,
   }];
@@ -73,7 +74,9 @@ export class OfferConfiguratorComponent implements OnInit {
   }
 
   onFeatureBlur(variant: Variant) {
+    variant.isDisabled = true;
     this.variantPriceService.calculatePrice$(variant)
+      .finally(() => variant.isDisabled = false)
       .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
   }
 
