@@ -8,7 +8,7 @@
     <h5>{{ featureGroup.name }}</h5>
     <div *ngFor="let feature of featureGroup.features">
       <p class="form-control-like">
-        {{ feature.name }}
+        {{ feature.name }} <small *ngIf="!!feature.description">({{ feature.description }})</small>
       </p>
     </div>
   </div>
