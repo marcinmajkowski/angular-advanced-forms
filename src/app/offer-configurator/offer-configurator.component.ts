@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
 import { FeatureGroup } from './variant/feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
+import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';
 
 const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
@@ -61,7 +62,7 @@ const SAMPLE_VARIANTS: Variant[] = [{
   selector: 'app-offer-configurator',
   templateUrl: './offer-configurator.component.html',
   styleUrls: ['./offer-configurator.component.scss'],
-  providers: [ VariantPriceService ],
+  providers: [ VariantPriceService, VariantLimitsService ],
 })
 export class OfferConfiguratorComponent implements OnInit {
 
@@ -69,11 +70,13 @@ export class OfferConfiguratorComponent implements OnInit {
 
   selectedVariant: Variant;
 
-  constructor(private variantPriceService: VariantPriceService) { }
+  constructor(private variantPriceService: VariantPriceService,
+              private variantLimitsService: VariantLimitsService) { }
 
   ngOnInit() {
     this.variants = SAMPLE_VARIANTS;
     this.selectedVariant = this.variants[0];
+    this.variants.forEach(variant => this.variantLimitsService.calculateLimits(variant));
     this.variants.forEach(variant => this.calculateVariant(variant));
   }
 
