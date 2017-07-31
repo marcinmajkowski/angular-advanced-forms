@@ -7,7 +7,7 @@
        *ngFor="let variant of variants; let i = index">
     <app-variant [variant]="variant"
                  [isSelected]="variant === selectedVariant"
-                 (featureBlur)="onFeatureBlur(variant)"
+                 (featureChange)="onFeatureChange(variant)"
                  (selected)="onSelected(variant)"></app-variant>
   </div>
 </div>

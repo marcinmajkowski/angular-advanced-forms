@@ -15,7 +15,7 @@ export class VariantComponent implements OnInit {
 
   @Output() selected = new EventEmitter<void>();
 
-  @Output() featureBlur = new EventEmitter<void>();
+  @Output() featureChange = new EventEmitter<void>();
 
   get isDisabled(): boolean {
     return this.variant.isDisabled;
@@ -30,8 +30,8 @@ export class VariantComponent implements OnInit {
     this.selected.emit();
   }
 
-  onBlur() {
-    this.featureBlur.emit();
+  onChange() {
+    this.featureChange.emit();
   }
 
   onFeatureValueChange(feature: Feature, newValue: number) {

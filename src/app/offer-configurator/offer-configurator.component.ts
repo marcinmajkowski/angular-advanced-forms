@@ -87,8 +87,7 @@ export class OfferConfiguratorComponent implements OnInit {
     this.selectedVariant = variant;
   }
 
-  onFeatureBlur(variant: Variant) {
-    // TODO recalculate only if changed
+  onFeatureChange(variant: Variant) {
     this.calculateVariant(variant);
   }
 }

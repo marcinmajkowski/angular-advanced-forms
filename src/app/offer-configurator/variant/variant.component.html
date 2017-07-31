@@ -24,7 +24,7 @@
                (ngModelChange)="onFeatureValueChange(feature, $event)"
                name="{{i}}-{{j}}-feature-value"
                required
-               (blur)="onBlur()"
+               (change)="onChange()"
                #valueInput="ngModel"
                [readonly]="isDisabled">
       </div>
