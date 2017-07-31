@@ -74,10 +74,11 @@ export class OfferConfiguratorComponent implements OnInit {
   }
 
   onFeatureBlur(variant: Variant) {
-    variant.isDisabled = true;
-    this.variantPriceService.calculatePrice$(variant)
-      .finally(() => variant.isDisabled = false)
-      .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
+    if (!variant.isDisabled) {
+      variant.isDisabled = true;
+      this.variantPriceService.calculatePrice$(variant)
+        .finally(() => variant.isDisabled = false)
+        .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
+    }
   }
-
 }
