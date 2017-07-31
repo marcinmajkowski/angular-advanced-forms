@@ -37,6 +37,23 @@ const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
   }]
 }];
 
+const SAMPLE_VARIANTS: Variant[] = [{
+  name: 'First',
+  isDisabled: false,
+  featureGroups: SAMPLE_FEATURE_GROUPS,
+  price: null,
+}, {
+  name: 'Second',
+  isDisabled: false,
+  featureGroups: SAMPLE_FEATURE_GROUPS,
+  price: null,
+}, {
+  name: 'Third',
+  isDisabled: false,
+  featureGroups: SAMPLE_FEATURE_GROUPS,
+  price: null,
+}];
+
 @Component({
   selector: 'app-offer-configurator',
   templateUrl: './offer-configurator.component.html',
@@ -45,28 +62,25 @@ const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
 })
 export class OfferConfiguratorComponent implements OnInit {
 
-  variants: Variant[] = [{
-    name: 'First',
-    isDisabled: false,
-    featureGroups: SAMPLE_FEATURE_GROUPS,
-    price: 10,
-  }, {
-    name: 'Second',
-    isDisabled: false,
-    featureGroups: SAMPLE_FEATURE_GROUPS,
-    price: 15,
-  }, {
-    name: 'Third',
-    isDisabled: false,
-    featureGroups: SAMPLE_FEATURE_GROUPS,
-    price: 20,
-  }];
+  variants: Variant[];
 
-  selectedVariant: Variant = this.variants[0];
+  selectedVariant: Variant;
 
   constructor(private variantPriceService: VariantPriceService) { }
 
   ngOnInit() {
+    this.variants = SAMPLE_VARIANTS;
+    this.selectedVariant = this.variants[0];
+    this.variants.forEach(variant => this.calculateVariant(variant));
+  }
+
+  calculateVariant(variant: Variant) {
+    if (!variant.isDisabled) {
+      variant.isDisabled = true;
+      this.variantPriceService.calculatePrice$(variant)
+        .finally(() => variant.isDisabled = false)
+        .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
+    }
   }
 
   onSelected(variant: Variant) {
@@ -74,11 +88,7 @@ export class OfferConfiguratorComponent implements OnInit {
   }
 
   onFeatureBlur(variant: Variant) {
-    if (!variant.isDisabled) {
-      variant.isDisabled = true;
-      this.variantPriceService.calculatePrice$(variant)
-        .finally(() => variant.isDisabled = false)
-        .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
-    }
+    // TODO recalculate only if changed
+    this.calculateVariant(variant);
   }
 }
