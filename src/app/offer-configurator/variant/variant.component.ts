@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Variant } from './variant.model';
-import { VariantState } from './variant-state.model';
 
 @Component({
   selector: 'app-variant',
@@ -11,6 +10,8 @@ export class VariantComponent implements OnInit, OnChanges {
 
   @Input() variant: Variant;
 
+  @Input() isSelected: boolean;
+
   @Output() selected = new EventEmitter<void>();
 
   @Output() featureBlur = new EventEmitter<void>();
@@ -18,11 +19,7 @@ export class VariantComponent implements OnInit, OnChanges {
   values: number[][];
 
   get isDisabled(): boolean {
-    return this.variant.state === VariantState.DISABLED;
-  }
-
-  get isSelected(): boolean {
-    return this.variant.state === VariantState.SELECTED;
+    return this.variant.isDisabled;
   }
 
   constructor() { }
@@ -31,7 +28,9 @@ export class VariantComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.values = changes.variant.currentValue.featureGroups.map(featureGroup => featureGroup.features.map(feature => feature.value));
+    if (changes.variant) {
+      this.values = changes.variant.currentValue.featureGroups.map(featureGroup => featureGroup.features.map(feature => feature.value));
+    }
   }
 
   onSelect() {

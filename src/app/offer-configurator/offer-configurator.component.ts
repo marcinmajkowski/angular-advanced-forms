@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
-import { VariantState } from './variant/variant-state.model';
 import { FeatureGroup } from './variant/feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
 
@@ -47,31 +46,30 @@ export class OfferConfiguratorComponent implements OnInit {
 
   variants: Variant[] = [{
     name: 'First',
-    state: VariantState.SELECTED,
+    isDisabled: false,
     featureGroups: SAMPLE_FEATURE_GROUPS,
     price: 10,
   }, {
     name: 'Second',
-    state: VariantState.ENABLED,
+    isDisabled: false,
     featureGroups: SAMPLE_FEATURE_GROUPS,
     price: 15,
   }, {
     name: 'Third',
-    state: VariantState.DISABLED,
+    isDisabled: true,
     featureGroups: SAMPLE_FEATURE_GROUPS,
     price: 20,
   }];
+
+  selectedVariant: Variant = this.variants[0];
 
   constructor(private variantPriceService: VariantPriceService) { }
 
   ngOnInit() {
   }
 
-  onSelected(selectedVariant: Variant) {
-    this.variants
-      .filter(variant => variant.state === VariantState.SELECTED)
-      .forEach(variant => variant.state = VariantState.ENABLED);
-    selectedVariant.state = VariantState.SELECTED;
+  onSelected(variant: Variant) {
+    this.selectedVariant = variant;
   }
 
   onFeatureBlur(variant: Variant) {

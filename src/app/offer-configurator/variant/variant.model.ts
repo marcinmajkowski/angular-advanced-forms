@@ -1,9 +1,8 @@
-import { VariantState } from './variant-state.model';
 import { FeatureGroup } from './feature/feature-group.model';
 
 export interface Variant {
   name: string;
-  state: VariantState;
+  isDisabled: boolean;
   featureGroups: FeatureGroup[];
   price: number;
 }
