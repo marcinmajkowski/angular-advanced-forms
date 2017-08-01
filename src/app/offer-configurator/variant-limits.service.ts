@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Variant } from './variant/variant.model';
-import { Feature } from './variant/feature/feature.model';
+import { Feature } from '../feature/feature.model';
 
 @Injectable()
 export class VariantLimitsService {

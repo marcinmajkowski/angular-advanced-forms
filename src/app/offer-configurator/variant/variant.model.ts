@@ -1,4 +1,4 @@
-import { FeatureGroup } from './feature/feature-group.model';
+import { FeatureGroup } from '../../feature/feature-group.model';
 
 export interface Variant {
   name: string;

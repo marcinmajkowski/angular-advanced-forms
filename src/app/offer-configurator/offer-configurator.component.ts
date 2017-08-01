@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
-import { FeatureGroup } from './variant/feature/feature-group.model';
+import { FeatureGroup } from '../feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
 import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';

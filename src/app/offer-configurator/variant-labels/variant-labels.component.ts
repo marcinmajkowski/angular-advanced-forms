@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FeatureGroup } from '../variant/feature/feature-group.model';
+import { FeatureGroup } from '../../feature/feature-group.model';
 
 @Component({
   selector: 'app-variant-labels',

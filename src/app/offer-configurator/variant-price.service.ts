@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/map';
-import { FeatureGroup } from './variant/feature/feature-group.model';
-import { Feature } from './variant/feature/feature.model';
+import { FeatureGroup } from '../feature/feature-group.model';
+import { Feature } from '../feature/feature.model';
 
 @Injectable()
 export class VariantPriceService {

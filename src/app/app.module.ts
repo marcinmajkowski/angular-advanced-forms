@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
 import { VariantComponent } from './offer-configurator/variant/variant.component';
 import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
-import { FeatureComponent } from './offer-configurator/variant/feature/feature.component';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { SharedModule } from './shared/shared.module';
     OfferConfiguratorComponent,
     VariantComponent,
     VariantLabelsComponent,
-    FeatureComponent,
   ],
   imports: [
     BrowserModule,
