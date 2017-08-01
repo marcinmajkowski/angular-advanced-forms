@@ -44,22 +44,24 @@ function sampleFeatureGroups(): FeatureGroup[] {
   }];
 }
 
-const SAMPLE_VARIANTS: Variant[] = [{
-  name: 'First',
-  isDisabled: false,
-  featureGroups: sampleFeatureGroups(),
-  price: null,
-}, {
-  name: 'Second',
-  isDisabled: false,
-  featureGroups: sampleFeatureGroups(),
-  price: null,
-}, {
-  name: 'Third',
-  isDisabled: false,
-  featureGroups: sampleFeatureGroups(),
-  price: null,
-}];
+function sampleVariants(): Variant[] {
+  return [{
+    name: 'First',
+    isDisabled: false,
+    featureGroups: sampleFeatureGroups(),
+    price: null,
+  }, {
+    name: 'Second',
+    isDisabled: false,
+    featureGroups: sampleFeatureGroups(),
+    price: null,
+  }, {
+    name: 'Third',
+    isDisabled: false,
+    featureGroups: sampleFeatureGroups(),
+    price: null,
+  }];
+}
 
 @Component({
   selector: 'app-offer-configurator',
@@ -77,7 +79,7 @@ export class OfferConfiguratorComponent implements OnInit {
               private variantLimitsService: VariantLimitsService) { }
 
   ngOnInit() {
-    this.variants = SAMPLE_VARIANTS;
+    this.variants = sampleVariants();
     this.selectedVariant = this.variants[0];
     this.variants.forEach(variant => this.variantLimitsService.calculateLimits(variant));
     this.variants.forEach(variant => this.calculateVariant(variant));
