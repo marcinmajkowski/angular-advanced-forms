@@ -32,9 +32,9 @@ export class VariantPriceService {
   }
 
   private isValidFeature(feature: Feature) {
-    if (feature.max && feature.value > feature.max) {
+    if (feature.max != null && feature.value > feature.max) {
       return false;
-    } else if (feature.max && feature.value > feature.max) {
+    } else if (feature.min != null && feature.value < feature.min) {
       return false;
     } else {
       return true;
