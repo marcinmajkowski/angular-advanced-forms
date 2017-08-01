@@ -4,6 +4,7 @@ import { FeatureGroup } from './variant/feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
 import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';
+import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
 
 function sampleFeatureGroups(): FeatureGroup[] {
   return [{
@@ -99,10 +100,10 @@ export class OfferConfiguratorComponent implements OnInit {
     this.calculateVariant(variant);
   }
 
-  // FIXME controls lose focus
-  // https://stackoverflow.com/questions/42322968/angular2-dynamic-input-field-lose-focus-when-input-changes
-  onVariantUpdate(variantIndex: number, updatedVariant: Variant) {
-    this.variants[variantIndex].featureGroups = updatedVariant.featureGroups;
+  onFeatureValueChange(variantIndex: number, event: FeatureValueChangeEvent) {
+    const featureGroupIndex = event.featureGroupIndex;
+    const featureIndex = event.featureIndex;
+    this.variants[variantIndex].featureGroups[featureGroupIndex].features[featureIndex].value = event.newValue;
     this.variantLimitsService.calculateLimits(this.variants[variantIndex]);
   }
 }

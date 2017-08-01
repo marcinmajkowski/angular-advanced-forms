@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Variant } from './variant.model';
-import { Feature } from './feature/feature.model';
-import { FeatureGroup } from './feature/feature-group.model';
+import { FeatureValueChangeEvent } from './feature-value-change-event.model';
 
 // FIXME probably need to trigger validators manually on min/max change
 @Component({
@@ -19,7 +18,7 @@ export class VariantComponent implements OnInit {
 
   @Output() featureChange = new EventEmitter<void>();
 
-  @Output() variantUpdate = new EventEmitter<Variant>();
+  @Output() featureValueChange = new EventEmitter<FeatureValueChangeEvent>();
 
   get isDisabled(): boolean {
     return this.variant.isDisabled;
@@ -38,21 +37,11 @@ export class VariantComponent implements OnInit {
     this.featureChange.emit();
   }
 
-  // TODO refactor
   onFeatureValueNgModelChange(featureGroupIndex: number, featureIndex: number, newValue: number) {
-    const updatedFeature: Feature = {
-      ...this.variant.featureGroups[featureGroupIndex].features[featureIndex],
-      value: newValue
-    };
-    const updatedFeatures: Feature[] = Object.assign([], this.variant.featureGroups[featureGroupIndex].features, {[featureIndex]: updatedFeature});
-    const updatedFeatureGroup: FeatureGroup = {
-      ...this.variant.featureGroups[featureGroupIndex],
-      features: updatedFeatures
-    };
-    const updatedFeatureGroups: FeatureGroup[] = Object.assign([], this.variant.featureGroups, {[featureGroupIndex]: updatedFeatureGroup});
-    this.variantUpdate.emit({
-      ...this.variant,
-      featureGroups: updatedFeatureGroups
+    this.featureValueChange.emit({
+      featureGroupIndex: featureGroupIndex,
+      featureIndex: featureIndex,
+      newValue: newValue
     });
   }
 }
