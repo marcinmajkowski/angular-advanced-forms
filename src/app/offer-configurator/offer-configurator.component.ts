@@ -5,56 +5,58 @@ import { VariantPriceService } from './variant-price.service';
 import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';
 
-const SAMPLE_FEATURE_GROUPS: FeatureGroup[] = [{
-  name: 'First group',
-  features: [{
-    name: 'Feature one',
-    description: 'No limits',
-    value: 100,
-    min: null,
-    max: null,
+function sampleFeatureGroups(): FeatureGroup[] {
+  return [{
+    name: 'First group',
+    features: [{
+      name: 'Feature one',
+      description: 'No limits',
+      value: 100,
+      min: null,
+      max: null,
+    }, {
+      name: 'Feature two',
+      description: '1 - 2 of feature one',
+      value: 200,
+      min: null,
+      max: null,
+    }]
   }, {
-    name: 'Feature two',
-    description: '1 - 2 of feature one',
-    value: 200,
-    min: null,
-    max: null,
-  }]
-}, {
-  name: 'Second group',
-  features: [{
-    name: 'Feature three',
-    description: '0 - 0.5 of feature two',
-    value: 300,
-    min: null,
-    max: null,
-  }, {
-    name: 'Feature four',
-    value: 400,
-    min: null,
-    max: null,
-  }, {
-    name: 'Feature five',
-    value: 500,
-    min: null,
-    max: null,
-  }]
-}];
+    name: 'Second group',
+    features: [{
+      name: 'Feature three',
+      description: '0 - 0.5 of feature two',
+      value: 300,
+      min: null,
+      max: null,
+    }, {
+      name: 'Feature four',
+      value: 400,
+      min: null,
+      max: null,
+    }, {
+      name: 'Feature five',
+      value: 500,
+      min: null,
+      max: null,
+    }]
+  }];
+}
 
 const SAMPLE_VARIANTS: Variant[] = [{
   name: 'First',
   isDisabled: false,
-  featureGroups: SAMPLE_FEATURE_GROUPS,
+  featureGroups: sampleFeatureGroups(),
   price: null,
 }, {
   name: 'Second',
   isDisabled: false,
-  featureGroups: SAMPLE_FEATURE_GROUPS,
+  featureGroups: sampleFeatureGroups(),
   price: null,
 }, {
   name: 'Third',
   isDisabled: false,
-  featureGroups: SAMPLE_FEATURE_GROUPS,
+  featureGroups: sampleFeatureGroups(),
   price: null,
 }];
 
