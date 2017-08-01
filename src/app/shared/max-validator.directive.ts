@@ -3,9 +3,9 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, Validators
 
 @Directive({
   selector: '[appMax]',
-  providers: [{provide: NG_VALIDATORS, useExisting: MaxDirective, multi: true}]
+  providers: [{provide: NG_VALIDATORS, useExisting: MaxValidatorDirective, multi: true}]
 })
-export class MaxDirective implements Validator, OnChanges {
+export class MaxValidatorDirective implements Validator, OnChanges {
 
   @Input('appMax') max: number;
 

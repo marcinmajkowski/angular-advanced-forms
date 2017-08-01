@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MinDirective } from './min.directive';
-import { MaxDirective } from './max.directive';
+import { MinValidatorDirective } from './min-validator.directive';
+import { MaxValidatorDirective } from './max-validator.directive';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [MinDirective, MaxDirective],
-  exports: [MinDirective, MaxDirective],
+  declarations: [MinValidatorDirective, MaxValidatorDirective],
+  exports: [MinValidatorDirective, MaxValidatorDirective],
 })
 export class SharedModule { }
