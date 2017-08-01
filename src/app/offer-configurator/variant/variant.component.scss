@@ -11,3 +11,9 @@ div.variant-column.variant-column-selected {
   // TODO replace with primary color variable
   border-color: rgb(2, 117, 216);
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
