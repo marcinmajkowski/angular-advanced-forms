@@ -6,6 +6,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/map';
 import { FeatureGroup } from './variant/feature/feature-group.model';
+import { Feature } from './variant/feature/feature.model';
 
 @Injectable()
 export class VariantPriceService {
@@ -15,12 +16,29 @@ export class VariantPriceService {
   constructor() { }
 
   calculatePrice$(variant: Variant): Observable<Variant> {
-    return Observable.of(variant)
-      .delay(500)
-      .map(originalVariant => ({
-        ...originalVariant,
-        price: priceForVariant(originalVariant)
-      }));
+    if (!this.isValidVariant(variant)) {
+      return Observable.of({...variant, price: null});
+    } else {
+      return Observable.of({...variant, price: priceForVariant(variant)}).delay(500);
+    }
+  }
+
+  private isValidVariant(variant: Variant): boolean {
+    return variant.featureGroups.every(featureGroup => this.isValidFeatureGroup(featureGroup));
+  }
+
+  private isValidFeatureGroup(featureGroup: FeatureGroup): boolean {
+    return featureGroup.features.every(feature => this.isValidFeature(feature));
+  }
+
+  private isValidFeature(feature: Feature) {
+    if (feature.max && feature.value > feature.max) {
+      return false;
+    } else if (feature.max && feature.value > feature.max) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 

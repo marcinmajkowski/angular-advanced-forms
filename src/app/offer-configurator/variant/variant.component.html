@@ -31,7 +31,7 @@
     </div>
     <hr/>
     <div>
-      <h5>${{ variant.price }}</h5>
+      <h5>{{ variant.price ? '$' + variant.price : '-' }}</h5>
       <button class="btn btn-block"
               [class.btn-primary]="isSelected"
               [class.btn-secondary]="!isSelected"
