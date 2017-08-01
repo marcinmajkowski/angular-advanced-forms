@@ -1,18 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FeatureGroup } from '../../feature/feature-group.model';
+import { Component, Input } from '@angular/core';
+import { FeatureGroupDefinition } from '../../feature/feature-group-definition.model';
 
 @Component({
   selector: 'app-variant-labels',
   templateUrl: './variant-labels.component.html',
   styleUrls: ['./variant-labels.component.scss'],
 })
-export class VariantLabelsComponent implements OnInit {
+export class VariantLabelsComponent {
 
-  @Input() featureGroups: FeatureGroup[];
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  @Input()
+  featureGroupDefinitions: FeatureGroupDefinition[];
 }

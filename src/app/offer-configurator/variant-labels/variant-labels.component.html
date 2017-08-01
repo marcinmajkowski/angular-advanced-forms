@@ -4,11 +4,12 @@
     <p>&nbsp;</p>
   </div>
   <hr/>
-  <div *ngFor="let featureGroup of featureGroups">
-    <h5>{{ featureGroup.name }}</h5>
-    <div *ngFor="let feature of featureGroup.features">
+  <div *ngFor="let groupDefinition of featureGroupDefinitions">
+    <h5>{{ groupDefinition.name }}</h5>
+    <div *ngFor="let featureDefinition of groupDefinition.features">
       <p class="form-control-like">
-        {{ feature.name }} <small *ngIf="!!feature.description">({{ feature.description }})</small>
+        {{ featureDefinition.name }}
+        <small *ngIf="!!featureDefinition.description">({{ featureDefinition.description }})</small>
       </p>
     </div>
   </div>
