@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FeatureService } from './feature/feature.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
+  featureGroupDefinitions$ = this.featureService.selectFeatureGroupDefinitions$();
+
+  constructor(
+    private featureService: FeatureService
+  ) { }
 }

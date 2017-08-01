@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
 import { FeatureGroup } from '../feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
 import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';
 import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
+import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
 
 function sampleFeatureGroups(): FeatureGroup[] {
   return [{
@@ -70,6 +71,8 @@ function sampleVariants(): Variant[] {
   providers: [ VariantPriceService, VariantLimitsService ],
 })
 export class OfferConfiguratorComponent implements OnInit {
+
+  @Input() featureGroupDefinitions: FeatureGroupDefinition[];
 
   variants: Variant[];
 

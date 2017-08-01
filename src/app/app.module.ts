@@ -8,6 +8,7 @@ import { OfferConfiguratorComponent } from './offer-configurator/offer-configura
 import { VariantComponent } from './offer-configurator/variant/variant.component';
 import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
 import { SharedModule } from './shared/shared.module';
+import { FeatureModule } from './feature/feature.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     NgbModule.forRoot(),
     SharedModule,
+    FeatureModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
