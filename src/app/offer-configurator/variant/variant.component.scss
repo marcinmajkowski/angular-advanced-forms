@@ -17,3 +17,10 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+// TODO reuse from variant-labels
+p.form-control-like {
+  padding: 0.5rem 0;
+  line-height: 1.25;
+  border: 1px solid rgba(0, 0, 0, 0);
+}

@@ -5,6 +5,7 @@
   <div class="col"
        *ngFor="let variant of variants; let i = index">
     <app-variant [variant]="variant"
+                 [featureGroupDefinitions]="featureGroupDefinitions"
                  [isSelected]="variant === selectedVariant"
                  (featureChange)="onFeatureChange(variant)"
                  (featureValueChange)="onFeatureValueChange(i, $event)"
