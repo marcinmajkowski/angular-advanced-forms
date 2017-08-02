@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Variant } from './variant.model';
 import { FeatureValueChangeEvent } from './feature-value-change-event.model';
 
-// FIXME probably need to trigger validators manually on min/max change
 @Component({
   selector: 'app-variant',
   templateUrl: './variant.component.html',
