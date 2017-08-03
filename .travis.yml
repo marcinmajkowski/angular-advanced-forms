@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "6.10"
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - npm install -g @angular/cli
+  - npm install -g angular-cli-ghpages
+
+script:
+  - ng build --prod --base-href "https://marcinmajkowski.github.io/angular-advanced-forms/"
+
+after_success:
+  - angular-cli-ghpages --repo=https://${GH_TOKEN}@github.com/marcinmajkowski/angular-advanced-forms.git
