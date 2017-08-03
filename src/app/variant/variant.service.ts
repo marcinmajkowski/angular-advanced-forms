@@ -4,6 +4,8 @@ import { Variant } from '../offer-configurator/variant/variant.model';
 import { Observable } from 'rxjs/Observable';
 import { FeatureGroup } from '../feature/feature-group.model';
 import 'rxjs/add/operator/pluck';
+import { VariantPriceService } from './variant-price.service';
+import { VariantLimitsService } from './variant-limits.service';
 
 function sampleFeatureGroups(): FeatureGroup[] {
   return [{
@@ -81,6 +83,9 @@ export class VariantService {
   private subject = new BehaviorSubject<State>(state);
   store = this.subject.asObservable().distinctUntilChanged();
 
+  constructor(private variantPriceService: VariantPriceService,
+              private variantLimitsService: VariantLimitsService) { }
+
   select$<T>(name: string): Observable<T> {
     return this.store.pluck(name);
   }
@@ -88,5 +93,9 @@ export class VariantService {
   updateSelectedVariantId(variantId: string) {
     const value = this.subject.value;
     this.subject.next({...value, selectedVariantId: variantId});
+  }
+
+  updateVariant(variant: Variant) {
+
   }
 }

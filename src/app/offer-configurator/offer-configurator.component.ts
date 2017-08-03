@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
-import { VariantPriceService } from './variant-price.service';
-import { VariantLimitsService } from './variant-limits.service';
+import { VariantPriceService } from '../variant/variant-price.service';
+import { VariantLimitsService } from '../variant/variant-limits.service';
 import 'rxjs/add/operator/finally';
 import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
 import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
@@ -11,7 +11,6 @@ import { VariantService } from '../variant/variant.service';
   selector: 'app-offer-configurator',
   templateUrl: './offer-configurator.component.html',
   styleUrls: ['./offer-configurator.component.scss'],
-  providers: [ VariantPriceService, VariantLimitsService ],
 })
 export class OfferConfiguratorComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Variant } from './variant/variant.model';
+import { Variant } from '../offer-configurator/variant/variant.model';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/of';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Variant } from './variant/variant.model';
+import { Variant } from '../offer-configurator/variant/variant.model';
 import { Feature } from '../feature/feature.model';
 
 @Injectable()
