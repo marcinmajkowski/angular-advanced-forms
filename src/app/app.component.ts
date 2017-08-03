@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FeatureService } from './feature/feature.service';
+import { VariantService } from './variant/variant.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,10 @@ export class AppComponent {
 
   featureGroupDefinitions$ = this.featureService.selectFeatureGroupDefinitions$();
 
+  variants$ = this.variantService.selectVariants$();
+
   constructor(
-    private featureService: FeatureService
+    private featureService: FeatureService,
+    private variantService: VariantService,
   ) { }
 }

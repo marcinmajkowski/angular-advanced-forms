@@ -1,68 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Variant } from './variant/variant.model';
-import { FeatureGroup } from '../feature/feature-group.model';
 import { VariantPriceService } from './variant-price.service';
 import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';
 import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
 import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
-
-function sampleFeatureGroups(): FeatureGroup[] {
-  return [{
-    name: 'First group',
-    features: [{
-      name: 'Feature one',
-      description: 'No limits',
-      value: 100,
-      min: null,
-      max: null,
-    }, {
-      name: 'Feature two',
-      description: '1 - 2 of feature one',
-      value: 200,
-      min: null,
-      max: null,
-    }]
-  }, {
-    name: 'Second group',
-    features: [{
-      name: 'Feature three',
-      description: '0 - 0.5 of feature two',
-      value: 300,
-      min: null,
-      max: null,
-    }, {
-      name: 'Feature four',
-      value: 400,
-      min: null,
-      max: null,
-    }, {
-      name: 'Feature five',
-      value: 500,
-      min: null,
-      max: null,
-    }]
-  }];
-}
-
-function sampleVariants(): Variant[] {
-  return [{
-    name: 'First',
-    isDisabled: false,
-    featureGroups: sampleFeatureGroups(),
-    price: null,
-  }, {
-    name: 'Second',
-    isDisabled: false,
-    featureGroups: sampleFeatureGroups(),
-    price: null,
-  }, {
-    name: 'Third',
-    isDisabled: false,
-    featureGroups: sampleFeatureGroups(),
-    price: null,
-  }];
-}
 
 @Component({
   selector: 'app-offer-configurator',
@@ -72,8 +14,10 @@ function sampleVariants(): Variant[] {
 })
 export class OfferConfiguratorComponent implements OnInit {
 
-  @Input() featureGroupDefinitions: FeatureGroupDefinition[];
+  @Input()
+  featureGroupDefinitions: FeatureGroupDefinition[];
 
+  @Input()
   variants: Variant[];
 
   selectedVariant: Variant;
@@ -82,7 +26,6 @@ export class OfferConfiguratorComponent implements OnInit {
               private variantLimitsService: VariantLimitsService) { }
 
   ngOnInit() {
-    this.variants = sampleVariants();
     this.selectedVariant = this.variants[0];
     this.variants.forEach(variant => this.variantLimitsService.calculateLimits(variant));
     this.variants.forEach(variant => this.calculateVariant(variant));

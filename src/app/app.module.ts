@@ -9,6 +9,7 @@ import { VariantComponent } from './offer-configurator/variant/variant.component
 import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
 import { SharedModule } from './shared/shared.module';
 import { FeatureModule } from './feature/feature.module';
+import { VariantModule } from './variant/variant.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FeatureModule } from './feature/feature.module';
     NgbModule.forRoot(),
     SharedModule,
     FeatureModule,
+    VariantModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
