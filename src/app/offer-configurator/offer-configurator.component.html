@@ -6,7 +6,7 @@
        *ngFor="let variant of variants; let i = index">
     <app-variant [variant]="variant"
                  [featureGroupDefinitions]="featureGroupDefinitions"
-                 [isSelected]="variant === selectedVariant"
+                 [isSelected]="variant.id === selectedVariantId"
                  (featureChange)="onFeatureChange(variant)"
                  (featureValueChange)="onFeatureValueChange(i, $event)"
                  (selected)="onSelected(variant)"></app-variant>

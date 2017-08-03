@@ -11,7 +11,9 @@ export class AppComponent {
 
   featureGroupDefinitions$ = this.featureService.selectFeatureGroupDefinitions$();
 
-  variants$ = this.variantService.selectVariants$();
+  variants$ = this.variantService.select$('variants');
+
+  selectedVariantId$ = this.variantService.select$('selectedVariantId');
 
   constructor(
     private featureService: FeatureService,

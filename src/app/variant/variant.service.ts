@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Variant } from '../offer-configurator/variant/variant.model';
 import { Observable } from 'rxjs/Observable';
 import { FeatureGroup } from '../feature/feature-group.model';
+import 'rxjs/add/operator/pluck';
 
 function sampleFeatureGroups(): FeatureGroup[] {
   return [{
@@ -44,16 +45,19 @@ function sampleFeatureGroups(): FeatureGroup[] {
 
 function sampleVariants(): Variant[] {
   return [{
+    id: '1',
     name: 'First',
     isDisabled: false,
     featureGroups: sampleFeatureGroups(),
     price: null,
   }, {
+    id: '2',
     name: 'Second',
     isDisabled: false,
     featureGroups: sampleFeatureGroups(),
     price: null,
   }, {
+    id: '3',
     name: 'Third',
     isDisabled: false,
     featureGroups: sampleFeatureGroups(),
@@ -61,13 +65,28 @@ function sampleVariants(): Variant[] {
   }];
 }
 
+interface State {
+  variants: Variant[];
+  selectedVariantId: string;
+}
+
+const state: State = {
+  variants: sampleVariants(),
+  selectedVariantId: '1',
+};
+
 @Injectable()
 export class VariantService {
 
-  private subject = new BehaviorSubject<Variant[]>(sampleVariants());
+  private subject = new BehaviorSubject<State>(state);
   store = this.subject.asObservable().distinctUntilChanged();
 
-  selectVariants$(): Observable<Variant[]> {
-    return this.store;
+  select$<T>(name: string): Observable<T> {
+    return this.store.pluck(name);
+  }
+
+  updateSelectedVariantId(variantId: string) {
+    const value = this.subject.value;
+    this.subject.next({...value, selectedVariantId: variantId});
   }
 }

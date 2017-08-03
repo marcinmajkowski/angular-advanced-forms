@@ -5,6 +5,7 @@ import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/finally';
 import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
 import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
+import { VariantService } from '../variant/variant.service';
 
 @Component({
   selector: 'app-offer-configurator',
@@ -20,13 +21,14 @@ export class OfferConfiguratorComponent implements OnInit {
   @Input()
   variants: Variant[];
 
-  selectedVariant: Variant;
+  @Input()
+  selectedVariantId: string;
 
   constructor(private variantPriceService: VariantPriceService,
-              private variantLimitsService: VariantLimitsService) { }
+              private variantLimitsService: VariantLimitsService,
+              private variantService: VariantService) { }
 
   ngOnInit() {
-    this.selectedVariant = this.variants[0];
     this.variants.forEach(variant => this.variantLimitsService.calculateLimits(variant));
     this.variants.forEach(variant => this.calculateVariant(variant));
   }
@@ -41,7 +43,7 @@ export class OfferConfiguratorComponent implements OnInit {
   }
 
   onSelected(variant: Variant) {
-    this.selectedVariant = variant;
+    this.variantService.updateSelectedVariantId(variant.id);
   }
 
   onFeatureChange(variant: Variant) {
