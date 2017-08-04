@@ -1,17 +1,15 @@
 <div class="variant-labels-column rounded p-3">
-  <div>
-    <h4>&nbsp;</h4>
-    <p>&nbsp;</p>
-  </div>
+  <h4>&nbsp;</h4>
+  <p>&nbsp;</p>
   <hr/>
-  <div *ngFor="let groupDefinition of featureGroupDefinitions">
-    <h5>{{ groupDefinition.name }}</h5>
-    <div *ngFor="let featureDefinition of groupDefinition.features">
+  <ng-container *ngFor="let field of column.fields">
+    <h5 *ngIf="field.type === 'SECTION_HEADER'">{{ field.text }}</h5>
+    <div *ngIf="field.type === 'LABEL'">
       <p class="form-control-like">
-        {{ featureDefinition.name }}
-        <small *ngIf="!!featureDefinition.description">({{ featureDefinition.description }})</small>
+        {{ field.text }}
+        <small *ngIf="!!field.description">({{ field.description }})</small>
       </p>
     </div>
-  </div>
+  </ng-container>
   <hr/>
 </div>

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-5">
-    <app-variant-labels [featureGroupDefinitions]="featureGroupDefinitions$ | async"></app-variant-labels>
+    <app-variant-labels [column]="labelColumn$ | async"></app-variant-labels>
   </div>
   <div class="col"
        *ngFor="let column of columns$ | async; trackBy: trackByFn; let i = index;">

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FeatureGroupDefinition } from '../../feature/feature-group-definition.model';
+import { LabelColumn } from './label-column.model';
 
 @Component({
   selector: 'app-variant-labels',
@@ -9,5 +9,5 @@ import { FeatureGroupDefinition } from '../../feature/feature-group-definition.m
 export class VariantLabelsComponent {
 
   @Input()
-  featureGroupDefinitions: FeatureGroupDefinition[];
+  column: LabelColumn;
 }
