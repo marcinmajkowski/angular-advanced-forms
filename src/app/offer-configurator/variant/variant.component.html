@@ -13,7 +13,7 @@
       <h5>&nbsp;</h5>
       <!-- TODO rethink, refactor -->
       <ng-container *ngFor="let featureDefinition of featureGroupDefinition.features; let j = index;">
-        <ng-container *ngFor="let feature of [featureForDefinition(featureGroupDefinition, featureDefinition)]">
+        <ng-container *ngFor="let feature of [featureForDefinition(featureGroupDefinition, featureDefinition)]; trackBy: trackByFn;">
           <div *ngIf="isInputFieldType(featureDefinition)"
                [class.has-danger]="valueInput.invalid"
                class="form-group">

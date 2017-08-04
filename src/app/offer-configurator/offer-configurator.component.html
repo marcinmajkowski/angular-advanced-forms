@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-5">
-    <app-variant-labels [featureGroupDefinitions]="featureGroupDefinitions"></app-variant-labels>
+    <app-variant-labels [featureGroupDefinitions]="featureGroupDefinitions$ | async"></app-variant-labels>
   </div>
   <div class="col"
-       *ngFor="let variant of variants; let i = index">
+       *ngFor="let variant of variants$ | async; trackBy: trackByFn; let i = index;">
     <app-variant [variant]="variant"
-                 [featureGroupDefinitions]="featureGroupDefinitions"
-                 [isSelected]="variant.id === selectedVariantId"
+                 [featureGroupDefinitions]="featureGroupDefinitions$ | async"
+                 [isSelected]="variant.id === (selectedVariantId$ | async)"
                  (featureChange)="onFeatureChange(variant)"
                  (featureValueChange)="onFeatureValueChange(i, $event)"
                  (selected)="onSelected(variant)"></app-variant>

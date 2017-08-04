@@ -1,58 +1,41 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Variant } from './variant/variant.model';
-import { VariantPriceService } from '../variant/variant-price.service';
-import { VariantLimitsService } from '../variant/variant-limits.service';
 import 'rxjs/add/operator/finally';
 import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
-import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
 import { VariantService } from '../variant/variant.service';
+import { FeatureService } from '../feature/feature.service';
 
 @Component({
   selector: 'app-offer-configurator',
   templateUrl: './offer-configurator.component.html',
   styleUrls: ['./offer-configurator.component.scss'],
 })
-export class OfferConfiguratorComponent implements OnInit {
+export class OfferConfiguratorComponent {
 
-  @Input()
-  featureGroupDefinitions: FeatureGroupDefinition[];
+  featureGroupDefinitions$ = this.featureService.selectFeatureGroupDefinitions$();
 
-  @Input()
-  variants: Variant[];
+  variants$ = this.variantService.select$('variants');
 
-  @Input()
-  selectedVariantId: string;
+  selectedVariantId$ = this.variantService.select$('selectedVariantId');
 
-  constructor(private variantPriceService: VariantPriceService,
-              private variantLimitsService: VariantLimitsService,
+  constructor(private featureService: FeatureService,
               private variantService: VariantService) { }
-
-  ngOnInit() {
-    this.variants.forEach(variant => this.variantLimitsService.calculateLimits(variant));
-    this.variants.forEach(variant => this.calculateVariant(variant));
-  }
-
-  calculateVariant(variant: Variant) {
-    if (!variant.isDisabled) {
-      variant.isDisabled = true;
-      this.variantPriceService.calculatePrice$(variant)
-        .finally(() => variant.isDisabled = false)
-        .subscribe(calculatedVariant => variant.price = calculatedVariant.price);
-    }
-  }
 
   onSelected(variant: Variant) {
     this.variantService.updateSelectedVariantId(variant.id);
   }
 
   onFeatureChange(variant: Variant) {
-    this.calculateVariant(variant);
+    this.variantService.calculateVariant(variant.id);
   }
 
   onFeatureValueChange(variantIndex: number, event: FeatureValueChangeEvent) {
     const featureGroupIndex = event.featureGroupIndex;
     const featureIndex = event.featureIndex;
-    this.variants[variantIndex].featureGroups[featureGroupIndex].features[featureIndex].value = event.newValue;
-    this.variantLimitsService.calculateLimits(this.variants[variantIndex]);
+    this.variantService.updateFeatureValue(variantIndex, featureGroupIndex, featureIndex, event.newValue);
+  }
+
+  trackByFn(index, item) {
+    return index;
   }
 }

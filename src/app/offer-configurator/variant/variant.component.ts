@@ -66,4 +66,8 @@ export class VariantComponent implements OnInit {
   isStaticValueFieldType(featureDefitnion: FeatureDefinition) {
     return featureDefitnion.variantFieldType === VariantFieldType.STATIC_VALUE;
   }
+
+  trackByFn(index, item) {
+    return index;
+  }
 }

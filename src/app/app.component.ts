@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { FeatureService } from './feature/feature.service';
-import { VariantService } from './variant/variant.service';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +6,4 @@ import { VariantService } from './variant/variant.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  featureGroupDefinitions$ = this.featureService.selectFeatureGroupDefinitions$();
-
-  variants$ = this.variantService.select$('variants');
-
-  selectedVariantId$ = this.variantService.select$('selectedVariantId');
-
-  constructor(
-    private featureService: FeatureService,
-    private variantService: VariantService,
-  ) { }
 }
