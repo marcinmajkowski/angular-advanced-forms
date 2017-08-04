@@ -3,14 +3,10 @@
     <app-variant-labels [featureGroupDefinitions]="featureGroupDefinitions$ | async"></app-variant-labels>
   </div>
   <div class="col"
-       *ngFor="let variant of variants$ | async; trackBy: trackByFn; let i = index;">
-    <app-variant [variant]="variant"
-                 [featureGroupDefinitions]="featureGroupDefinitions$ | async"
-                 [isSelected]="variant.id === (selectedVariantId$ | async)"
-                 (featureChange)="onFeatureChange(variant)"
-                 (featureValueChange)="onFeatureValueChange(i, $event)"
-                 (selected)="onSelected(variant)"></app-variant>
+       *ngFor="let column of columns$ | async; trackBy: trackByFn; let i = index;">
+    <app-variant [column]="column"
+                 (fieldChange)="onFieldChange(column)"
+                 (fieldValueChange)="onFieldValueChange(column, $event)"
+                 (selected)="onSelected(column)"></app-variant>
   </div>
 </div>
-
-<pre>{{ column$ | async | json}}</pre>

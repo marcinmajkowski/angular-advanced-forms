@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Variant } from './variant/variant.model';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/combineLatest';
-import { FeatureValueChangeEvent } from './variant/feature-value-change-event.model';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/withLatestFrom';
 import { VariantService } from '../variant/variant.service';
 import { FeatureService } from '../feature/feature.service';
 import { Observable } from 'rxjs/Observable';
@@ -10,12 +11,15 @@ import { FormColumn } from './variant/form-column.model';
 import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
 import { FeatureGroup } from '../feature/feature-group.model';
 import {
-  FormColumnField, NumberInputFormColumnField,
+  FormColumnField,
+  NumberInputFormColumnField,
   StaticTextFormColumnField
 } from './variant/form-column-field.model';
 import { FeatureDefinition } from '../feature/feature-definition.model';
 import { Feature } from '../feature/feature.model';
 import { VariantFieldType } from '../feature/variant-field-type.enum';
+
+// TODO move mapping code to facade
 
 function columnFromVariant(variant: Variant, selectedVariantId: string, featureGroupDefinitions: FeatureGroupDefinition[]): FormColumn {
   return {
@@ -68,8 +72,11 @@ function featureForDefinition(featureGroups: FeatureGroup[],
     .find(feature => feature.name === featureDefinition.name);
 }
 
-// TODO mapping column events back to domain
+function variantIdFromColumn(formColumn: FormColumn) {
+  return formColumn.id;
+}
 
+// TODO refactor so this component will not know about features or variants
 @Component({
   selector: 'app-offer-configurator',
   templateUrl: './offer-configurator.component.html',
@@ -83,32 +90,40 @@ export class OfferConfiguratorComponent {
 
   selectedVariantId$: Observable<string> = this.variantService.select$('selectedVariantId');
 
-  column$ = this.variants$
+  columns$: Observable<FormColumn[]> = this.variants$
     .combineLatest(
       this.selectedVariantId$,
       this.featureGroupDefinitions$,
-      (variants, selectedVariantId, featureGroupDefinitions) => columnFromVariant(
-        variants.find(variant => variant.id === selectedVariantId),
+      (variants, selectedVariantId, featureGroupDefinitions) => variants.map(variant => columnFromVariant(
+        variant,
         selectedVariantId,
         featureGroupDefinitions
-      )
+      ))
     );
 
   constructor(private featureService: FeatureService,
               private variantService: VariantService) { }
 
-  onSelected(variant: Variant) {
-    this.variantService.updateSelectedVariantId(variant.id);
+  onSelected(column: FormColumn) {
+    this.variantService.updateSelectedVariantId(variantIdFromColumn(column));
   }
 
-  onFeatureChange(variant: Variant) {
-    this.variantService.calculateVariant(variant.id);
+  onFieldChange(column: FormColumn) {
+    this.variantService.calculateVariant(variantIdFromColumn(column));
   }
 
-  onFeatureValueChange(variantIndex: number, event: FeatureValueChangeEvent) {
-    const featureGroupIndex = event.featureGroupIndex;
-    const featureIndex = event.featureIndex;
-    this.variantService.updateFeatureValue(variantIndex, featureGroupIndex, featureIndex, event.newValue);
+  // TODO refactor
+  onFieldValueChange(column: FormColumn, event: {fieldId: string, value: any}) {
+    Observable.of(true)
+      .withLatestFrom(this.variants$, (_, variants) => {
+        const variantIndex = variants.findIndex(variant => variant.id === column.id);
+        const featureGroupIndex = variants[variantIndex].featureGroups
+          .findIndex(featureGroup => !!featureGroup.features
+            .find(feature => feature.name === event.fieldId));
+        const featureIndex = variants[variantIndex].featureGroups[featureGroupIndex].features
+          .findIndex(feature => feature.name === event.fieldId);
+        this.variantService.updateFeatureValue(variantIndex, featureGroupIndex, featureIndex, event.value);
+      }).subscribe();
   }
 
   trackByFn(index, item) {
