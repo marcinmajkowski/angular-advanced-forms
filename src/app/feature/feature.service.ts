@@ -8,15 +8,15 @@ import { VariantFieldType } from './variant-field-type.enum';
 const featureGroupDefinitions: FeatureGroupDefinition[] = [{
   name: 'First group',
   features: [
-    {name: 'Feature one', description: 'No limits', variantFieldType: VariantFieldType.INPUT},
-    {name: 'Feature two', description: '1 - 2 of feature one', variantFieldType: VariantFieldType.INPUT},
+    {id: '1', name: 'Feature one', description: 'No limits', variantFieldType: VariantFieldType.INPUT},
+    {id: '2', name: 'Feature two', description: '1 - 2 of feature one', variantFieldType: VariantFieldType.INPUT},
   ]
 }, {
   name: 'Second group',
   features: [
-    {name: 'Feature three', description: '0 - 0.5 of feature two', variantFieldType: VariantFieldType.INPUT},
-    {name: 'Feature four', variantFieldType: VariantFieldType.STATIC_VALUE},
-    {name: 'Feature five', variantFieldType: VariantFieldType.STATIC_VALUE},
+    {id: '3', name: 'Feature three', description: '0 - 0.5 of feature two', variantFieldType: VariantFieldType.INPUT},
+    {id: '4', name: 'Feature four', variantFieldType: VariantFieldType.STATIC_VALUE},
+    {id: '5', name: 'Feature five', variantFieldType: VariantFieldType.STATIC_VALUE},
   ]
 }];
 
