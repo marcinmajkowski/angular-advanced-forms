@@ -10,6 +10,7 @@ import { VariantLabelsComponent } from './offer-configurator/variant-labels/vari
 import { SharedModule } from './shared/shared.module';
 import { FeatureModule } from './feature/feature.module';
 import { VariantModule } from './variant/variant.module';
+import { OfferConfiguratorAdapterComponent } from './offer-configurator-adapter/offer-configurator-adapter.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { VariantModule } from './variant/variant.module';
     OfferConfiguratorComponent,
     VariantComponent,
     VariantLabelsComponent,
+    OfferConfiguratorAdapterComponent,
   ],
   imports: [
     BrowserModule,
