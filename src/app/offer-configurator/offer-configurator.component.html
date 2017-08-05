@@ -1,6 +1,6 @@
 <div class="row">
   <div
-    *ngFor="let column of column$ | async; trackBy: trackByFn"
+    *ngFor="let column of columns; trackBy: trackByFn"
     class="col{{ column.gridColumnCount ? '-' + column.gridColumnCount : '' }}"
     [ngSwitch]="column.kind">
 
@@ -12,9 +12,9 @@
     <app-variant
       *ngSwitchCase="'form'"
       [column]="column"
-      (fieldChange)="onFieldChange(column)"
       (fieldValueChange)="onFieldValueChange(column, $event)"
-      (selected)="onSelected(column)">
+      (fieldEditingComplete)="onFieldEditingComplete(column, $event)"
+      (select)="onSelect(column)">
     </app-variant>
 
   </div>

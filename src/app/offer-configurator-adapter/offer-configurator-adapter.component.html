@@ -1,1 +1,6 @@
-<app-offer-configurator></app-offer-configurator>
+<app-offer-configurator
+  [columns]="columns$ | async"
+  (columnFieldEditingComplete)="onColumnFieldEditingComplete($event)"
+  (columnFieldValueChange)="onColumnFieldValueChange($event)"
+  (columnSelect)="onColumnSelect($event)">
+</app-offer-configurator>

@@ -31,10 +31,10 @@
                [max]="field.max"
                [appMax]="field.max"
                [ngModel]="field.value"
-               (ngModelChange)="onFieldValueNgModelChange(field.id, $event)"
+               (ngModelChange)="onFieldValueNgModelChange(field, $event)"
                name="{{column.id}}-{{field.id}}-field"
                required
-               (change)="onChange()"
+               (change)="onChange(field)"
                #valueInput="ngModel"
                [readonly]="column.isDisabled">
       </div>

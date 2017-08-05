@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormColumn } from './form-column.model';
-import { FormColumnField } from './form-column-field.model';
+import { FormColumnField, NumberInputFormColumnField } from './form-column-field.model';
 
 // TODO ChangeDetectionStrategy.ON_PUSH breaks initial validation
 @Component({
@@ -12,23 +12,23 @@ export class VariantComponent {
 
   @Input() column: FormColumn;
 
-  @Output() selected = new EventEmitter<void>();
+  @Output() select = new EventEmitter<void>();
 
-  @Output() fieldChange = new EventEmitter<string>();
+  @Output() fieldEditingComplete = new EventEmitter<FormColumnField>();
 
-  @Output() fieldValueChange = new EventEmitter<{fieldId: string, value: any}>();
+  @Output() fieldValueChange = new EventEmitter<FormColumnField>();
 
   onSelect() {
-    this.selected.emit();
+    this.select.emit();
   }
 
-  onChange(fieldId: string) {
-    this.fieldChange.emit(fieldId);
+  onChange(field: FormColumnField) {
+    this.fieldEditingComplete.emit(field);
   }
 
-  onFieldValueNgModelChange(fieldId: string, value: any) {
+  onFieldValueNgModelChange(field: NumberInputFormColumnField, value: number) {
     this.fieldValueChange.emit({
-      fieldId: fieldId,
+      ...field,
       value: value
     });
   }
