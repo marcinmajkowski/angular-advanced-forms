@@ -20,6 +20,12 @@ const featureGroupDefinitions: FeatureGroupDefinition[] = [{
   ]
 }];
 
+export interface FeatureConstraints {
+  min?: number;
+  max?: number;
+  required: boolean;
+}
+
 @Injectable()
 export class FeatureService {
 
@@ -33,5 +39,9 @@ export class FeatureService {
   addFeatureGroupDefinition(featureGroupDefinition: FeatureGroupDefinition): void {
     const value = this.subject.value;
     this.subject.next([...value, featureGroupDefinition]);
+  }
+
+  constraints(featureIdToValue: {[featureId: string]: any}): {[featureId: string]: FeatureConstraints} {
+    return null;
   }
 }
