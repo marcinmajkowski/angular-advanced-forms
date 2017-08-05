@@ -4,6 +4,7 @@ import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/observable/combineLatest';
 import { VariantService } from '../variant/variant.service';
 import { FeatureService } from '../feature/feature.service';
 import { Observable } from 'rxjs/Observable';
@@ -19,11 +20,13 @@ import { FeatureDefinition } from '../feature/feature-definition.model';
 import { Feature } from '../feature/feature.model';
 import { VariantFieldType } from '../feature/variant-field-type.enum';
 import { LabelColumn } from './variant-labels/label-column.model';
+import { Column } from './variant/column.interface';
 
 // TODO move mapping code to facade
 
 function columnFromVariant(variant: Variant, selectedVariantId: string, featureGroupDefinitions: FeatureGroupDefinition[]): FormColumn {
   return {
+    kind: 'form',
     id: variant.id,
     title: variant.name,
     subtitle: 'variant',
@@ -91,7 +94,7 @@ export class OfferConfiguratorComponent {
 
   selectedVariantId$: Observable<string> = this.variantService.select$('selectedVariantId');
 
-  columns$: Observable<FormColumn[]> = this.variants$
+  formColumns$: Observable<FormColumn[]> = this.variants$
     .combineLatest(
       this.selectedVariantId$,
       this.featureGroupDefinitions$,
@@ -105,6 +108,7 @@ export class OfferConfiguratorComponent {
   // TODO LabelColumn and FormColumn common base class
   labelColumn$: Observable<LabelColumn> = this.featureGroupDefinitions$
     .map(featureGroupDefinitions => ({
+      kind: 'label',
       fields: featureGroupDefinitions.reduce((fields, featureGroupDefinition) => {
         fields.push({
           type: 'SECTION_HEADER',
@@ -117,6 +121,12 @@ export class OfferConfiguratorComponent {
         })));
       }, [])
     }));
+
+  column$: Observable<Column[]> = Observable.combineLatest(
+    this.labelColumn$,
+    this.formColumns$,
+    (labelColumn, formColumns) => [labelColumn, ...formColumns]
+  );
 
   constructor(private featureService: FeatureService,
               private variantService: VariantService) { }

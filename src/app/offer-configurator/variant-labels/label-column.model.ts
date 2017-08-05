@@ -1,4 +1,5 @@
 export interface LabelColumn {
+  kind: 'label';
   fields: LabelColumnField[];
 }
 

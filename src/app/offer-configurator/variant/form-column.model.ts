@@ -1,6 +1,7 @@
 import { FormColumnField } from './form-column-field.model';
 
 export interface FormColumn {
+  kind: 'form';
   id: string;
   title: string;
   subtitle: string;

@@ -1,12 +1,21 @@
 <div class="row">
-  <div class="col-5">
-    <app-variant-labels [column]="labelColumn$ | async"></app-variant-labels>
-  </div>
-  <div class="col"
-       *ngFor="let column of columns$ | async; trackBy: trackByFn; let i = index;">
-    <app-variant [column]="column"
-                 (fieldChange)="onFieldChange(column)"
-                 (fieldValueChange)="onFieldValueChange(column, $event)"
-                 (selected)="onSelected(column)"></app-variant>
-  </div>
+  <ng-container *ngFor="let column of column$ | async; trackBy: trackByFn"
+                [ngSwitch]="column.kind">
+
+    <div *ngSwitchCase="'label'" class="col-5">
+      <app-variant-labels
+        [column]="column">
+      </app-variant-labels>
+    </div>
+
+    <div *ngSwitchCase="'form'" class="col">
+      <app-variant
+        [column]="column"
+        (fieldChange)="onFieldChange(column)"
+        (fieldValueChange)="onFieldValueChange(column, $event)"
+        (selected)="onSelected(column)">
+      </app-variant>
+    </div>
+
+  </ng-container>
 </div>
