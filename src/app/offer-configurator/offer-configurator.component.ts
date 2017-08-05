@@ -19,7 +19,7 @@ import {
 import { FeatureDefinition } from '../feature/feature-definition.model';
 import { Feature } from '../feature/feature.model';
 import { VariantFieldType } from '../feature/variant-field-type.enum';
-import { LabelColumn } from './variant-labels/label-column.model';
+import { LabelColumn, LabelLabelColumnField, SectionHeaderLabelColumnField } from './variant-labels/label-column.model';
 import { Column } from './variant/column.interface';
 
 // TODO move mapping code to facade
@@ -107,16 +107,16 @@ export class OfferConfiguratorComponent {
 
   // TODO LabelColumn and FormColumn common base class
   labelColumn$: Observable<LabelColumn> = this.featureGroupDefinitions$
-    .map(featureGroupDefinitions => ({
+    .map(featureGroupDefinitions => (<LabelColumn>{
       kind: 'label',
       gridColumnCount: 4,
       fields: featureGroupDefinitions.reduce((fields, featureGroupDefinition) => {
-        fields.push({
-          type: 'SECTION_HEADER',
+        fields.push(<SectionHeaderLabelColumnField>{
+          kind: 'sectionHeader',
           text: featureGroupDefinition.name
         });
-        return fields.concat(featureGroupDefinition.features.map(feature => ({
-          type: 'LABEL',
+        return fields.concat(featureGroupDefinition.features.map(feature => (<LabelLabelColumnField>{
+          kind: 'label',
           text: feature.name,
           description: feature.description
         })));

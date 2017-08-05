@@ -4,8 +4,15 @@ export interface LabelColumn {
   fields: LabelColumnField[];
 }
 
-export interface LabelColumnField {
-  type: 'SECTION_HEADER' | 'LABEL';
+export type LabelColumnField = SectionHeaderLabelColumnField | LabelLabelColumnField;
+
+export interface SectionHeaderLabelColumnField {
+  kind: 'sectionHeader';
   text: string;
-  description?: string;
+}
+
+export interface LabelLabelColumnField {
+  kind: 'label';
+  text: string;
+  description: string;
 }

@@ -2,14 +2,21 @@
   <h4>&nbsp;</h4>
   <p>&nbsp;</p>
   <hr/>
-  <ng-container *ngFor="let field of column.fields">
-    <h5 *ngIf="field.type === 'SECTION_HEADER'">{{ field.text }}</h5>
-    <div *ngIf="field.type === 'LABEL'">
+  <ng-container
+    *ngFor="let field of column.fields"
+    [ngSwitch]="field.kind">
+
+    <h5 *ngSwitchCase="'sectionHeader'">
+      {{ field.text }}
+    </h5>
+
+    <div *ngSwitchCase="'label'">
       <p class="form-control-like">
         {{ field.text }}
         <small *ngIf="!!field.description">({{ field.description }})</small>
       </p>
     </div>
+
   </ng-container>
   <hr/>
 </div>
