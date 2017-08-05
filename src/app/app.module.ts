@@ -8,16 +8,11 @@ import { SharedModule } from './shared/shared.module';
 import { FeatureModule } from './feature/feature.module';
 import { VariantModule } from './variant/variant.module';
 import { OfferConfiguratorAdapterComponent } from './offer-configurator-adapter/offer-configurator-adapter.component';
-import { FormColumnComponent } from './configurator/form-column/form-column.component';
-import { LabelColumnComponent } from './configurator/label-column/label-column.component';
-import { ConfiguratorComponent } from './configurator/configurator.component';
+import { ConfiguratorModule } from './configurator/configurator.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfiguratorComponent,
-    FormColumnComponent,
-    LabelColumnComponent,
     OfferConfiguratorAdapterComponent,
   ],
   imports: [
@@ -25,6 +20,7 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
     FormsModule,
     NgbModule.forRoot(),
     SharedModule,
+    ConfiguratorModule,
     FeatureModule,
     VariantModule,
   ],
