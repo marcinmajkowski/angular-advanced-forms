@@ -4,11 +4,10 @@ import { FormColumn } from './form-column/form-column.model';
 import { FormColumnField } from './form-column/form-column-field.model';
 
 @Component({
-  selector: 'app-offer-configurator',
-  templateUrl: './offer-configurator.component.html',
-  styleUrls: ['./offer-configurator.component.scss'],
+  selector: 'app-configurator',
+  templateUrl: './configurator.component.html',
 })
-export class OfferConfiguratorComponent {
+export class ConfiguratorComponent {
 
   @Input() columns: Column[];
 
