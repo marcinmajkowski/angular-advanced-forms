@@ -109,6 +109,7 @@ export class OfferConfiguratorComponent {
   labelColumn$: Observable<LabelColumn> = this.featureGroupDefinitions$
     .map(featureGroupDefinitions => ({
       kind: 'label',
+      gridColumnCount: 4,
       fields: featureGroupDefinitions.reduce((fields, featureGroupDefinition) => {
         fields.push({
           type: 'SECTION_HEADER',

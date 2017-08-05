@@ -1,21 +1,21 @@
 <div class="row">
-  <ng-container *ngFor="let column of column$ | async; trackBy: trackByFn"
-                [ngSwitch]="column.kind">
+  <div
+    *ngFor="let column of column$ | async; trackBy: trackByFn"
+    class="col{{ column.gridColumnCount ? '-' + column.gridColumnCount : '' }}"
+    [ngSwitch]="column.kind">
 
-    <div *ngSwitchCase="'label'" class="col-5">
-      <app-variant-labels
-        [column]="column">
-      </app-variant-labels>
-    </div>
+    <app-variant-labels
+      *ngSwitchCase="'label'"
+      [column]="column">
+    </app-variant-labels>
 
-    <div *ngSwitchCase="'form'" class="col">
-      <app-variant
-        [column]="column"
-        (fieldChange)="onFieldChange(column)"
-        (fieldValueChange)="onFieldValueChange(column, $event)"
-        (selected)="onSelected(column)">
-      </app-variant>
-    </div>
+    <app-variant
+      *ngSwitchCase="'form'"
+      [column]="column"
+      (fieldChange)="onFieldChange(column)"
+      (fieldValueChange)="onFieldValueChange(column, $event)"
+      (selected)="onSelected(column)">
+    </app-variant>
 
-  </ng-container>
+  </div>
 </div>

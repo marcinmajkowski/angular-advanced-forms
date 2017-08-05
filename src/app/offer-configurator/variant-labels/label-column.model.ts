@@ -1,5 +1,6 @@
 export interface LabelColumn {
   kind: 'label';
+  gridColumnCount?: number;
   fields: LabelColumnField[];
 }
 
