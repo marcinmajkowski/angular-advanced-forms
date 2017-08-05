@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Column } from './variant/column.interface';
-import { FormColumn } from './variant/form-column.model';
-import { FormColumnField } from './variant/form-column-field.model';
+import { Column } from './column.interface';
+import { FormColumn } from './form-column/form-column.model';
+import { FormColumnField } from './form-column/form-column-field.model';
 
 @Component({
   selector: 'app-offer-configurator',

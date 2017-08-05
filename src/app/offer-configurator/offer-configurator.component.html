@@ -9,13 +9,13 @@
       [column]="column">
     </app-variant-labels>
 
-    <app-variant
+    <app-form-column
       *ngSwitchCase="'form'"
       [column]="column"
       (fieldValueChange)="onFieldValueChange(column, $event)"
       (fieldEditingComplete)="onFieldEditingComplete(column, $event)"
       (select)="onSelect(column)">
-    </app-variant>
+    </app-form-column>
 
   </div>
 </div>

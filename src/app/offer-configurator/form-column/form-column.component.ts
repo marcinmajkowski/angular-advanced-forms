@@ -4,11 +4,11 @@ import { FormColumnField, NumberInputFormColumnField } from './form-column-field
 
 // TODO ChangeDetectionStrategy.ON_PUSH breaks initial validation
 @Component({
-  selector: 'app-variant',
-  templateUrl: './variant.component.html',
-  styleUrls: ['./variant.component.scss'],
+  selector: 'app-form-column',
+  templateUrl: './form-column.component.html',
+  styleUrls: ['./form-column.component.scss'],
 })
-export class VariantComponent {
+export class FormColumnComponent {
 
   @Input() column: FormColumn;
 

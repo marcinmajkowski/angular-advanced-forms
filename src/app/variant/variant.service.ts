@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Variant } from '../offer-configurator/variant/variant.model';
 import { Observable } from 'rxjs/Observable';
 import { FeatureGroup } from '../feature/feature-group.model';
 import 'rxjs/add/operator/pluck';
@@ -8,6 +7,7 @@ import { VariantPriceService } from './variant-price.service';
 import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
+import { Variant } from './variant.model';
 
 function sampleFeatureGroups(): FeatureGroup[] {
   return [{

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VariantComponent } from './variant.component';
+import { FormColumnComponent } from './form-column.component';
 
-describe('VariantComponent', () => {
-  let component: VariantComponent;
-  let fixture: ComponentFixture<VariantComponent>;
+describe('FormColumnComponent', () => {
+  let component: FormColumnComponent;
+  let fixture: ComponentFixture<FormColumnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VariantComponent ]
+      declarations: [ FormColumnComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VariantComponent);
+    fixture = TestBed.createComponent(FormColumnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

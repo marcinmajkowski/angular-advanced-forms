@@ -12,17 +12,17 @@ import { FeatureGroup } from '../feature/feature-group.model';
 import { FeatureDefinition } from '../feature/feature-definition.model';
 import { Feature } from '../feature/feature.model';
 import { VariantFieldType } from '../feature/variant-field-type.enum';
-import { Variant } from '../offer-configurator/variant/variant.model';
-import { FormColumn } from '../offer-configurator/variant/form-column.model';
-import {
-  FormColumnField, NumberInputFormColumnField, SpacerFormColumnField,
-  StaticTextFormColumnField
-} from '../offer-configurator/variant/form-column-field.model';
 import {
   LabelColumn, LabelLabelColumnField,
   SectionHeaderLabelColumnField
 } from '../offer-configurator/variant-labels/label-column.model';
-import { Column } from '../offer-configurator/variant/column.interface';
+import { Variant } from '../variant/variant.model';
+import { FormColumn } from '../offer-configurator/form-column/form-column.model';
+import {
+  FormColumnField, NumberInputFormColumnField, SpacerFormColumnField,
+  StaticTextFormColumnField
+} from '../offer-configurator/form-column/form-column-field.model';
+import { Column } from '../offer-configurator/column.interface';
 
 // TODO move mapping code to facade
 

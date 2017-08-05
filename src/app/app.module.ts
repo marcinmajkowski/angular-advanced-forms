@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
-import { VariantComponent } from './offer-configurator/variant/variant.component';
+import { FormColumnComponent } from './offer-configurator/form-column/form-column.component';
 import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
 import { SharedModule } from './shared/shared.module';
 import { FeatureModule } from './feature/feature.module';
@@ -16,7 +16,7 @@ import { OfferConfiguratorAdapterComponent } from './offer-configurator-adapter/
   declarations: [
     AppComponent,
     OfferConfiguratorComponent,
-    VariantComponent,
+    FormColumnComponent,
     VariantLabelsComponent,
     OfferConfiguratorAdapterComponent,
   ],
