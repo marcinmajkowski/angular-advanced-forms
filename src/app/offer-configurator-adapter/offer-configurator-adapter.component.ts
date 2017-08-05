@@ -12,10 +12,6 @@ import { FeatureGroup } from '../feature/feature-group.model';
 import { FeatureDefinition } from '../feature/feature-definition.model';
 import { Feature } from '../feature/feature.model';
 import { VariantFieldType } from '../feature/variant-field-type.enum';
-import {
-  LabelColumn, LabelLabelColumnField,
-  SectionHeaderLabelColumnField
-} from '../offer-configurator/variant-labels/label-column.model';
 import { Variant } from '../variant/variant.model';
 import { FormColumn } from '../offer-configurator/form-column/form-column.model';
 import {
@@ -23,6 +19,8 @@ import {
   StaticTextFormColumnField
 } from '../offer-configurator/form-column/form-column-field.model';
 import { Column } from '../offer-configurator/column.interface';
+import { LabelColumn } from '../offer-configurator/label-column/label-column.model';
+import { SectionHeaderLabelColumnField, LabelLabelColumnField } from '../offer-configurator/label-column/label-column-field.model';
 
 // TODO move mapping code to facade
 

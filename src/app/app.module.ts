@@ -6,18 +6,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { OfferConfiguratorComponent } from './offer-configurator/offer-configurator.component';
 import { FormColumnComponent } from './offer-configurator/form-column/form-column.component';
-import { VariantLabelsComponent } from './offer-configurator/variant-labels/variant-labels.component';
 import { SharedModule } from './shared/shared.module';
 import { FeatureModule } from './feature/feature.module';
 import { VariantModule } from './variant/variant.module';
 import { OfferConfiguratorAdapterComponent } from './offer-configurator-adapter/offer-configurator-adapter.component';
+import { LabelColumnComponent } from './offer-configurator/label-column/label-column.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OfferConfiguratorComponent,
     FormColumnComponent,
-    VariantLabelsComponent,
+    LabelColumnComponent,
     OfferConfiguratorAdapterComponent,
   ],
   imports: [

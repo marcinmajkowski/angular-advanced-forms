@@ -4,10 +4,10 @@
     class="col{{ column.gridColumnCount ? '-' + column.gridColumnCount : '' }}"
     [ngSwitch]="column.kind">
 
-    <app-variant-labels
+    <app-label-column
       *ngSwitchCase="'label'"
       [column]="column">
-    </app-variant-labels>
+    </app-label-column>
 
     <app-form-column
       *ngSwitchCase="'form'"
