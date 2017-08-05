@@ -74,7 +74,7 @@ interface State {
   selectedVariantId: string;
 }
 
-const state: State = {
+const initialState: State = {
   variants: sampleVariants(),
   selectedVariantId: '1',
 };
@@ -82,15 +82,19 @@ const state: State = {
 @Injectable()
 export class VariantService {
 
-  private subject = new BehaviorSubject<State>(state);
+  private subject = new BehaviorSubject<State>(initialState);
   store = this.subject.asObservable().distinctUntilChanged();
 
   // FIXME update limits on initialization
   constructor(private variantPriceService: VariantPriceService,
               private variantLimitsService: VariantLimitsService) { }
 
-  select$<T>(name: string): Observable<T> {
-    return this.store.pluck(name);
+  get variants$(): Observable<Variant[]> {
+    return this.store.pluck('variants');
+  }
+
+  get selectedVariant$(): Observable<Variant> {
+    return this.store.map(state => state.variants.find(variant => variant.id === state.selectedVariantId));
   }
 
   // TODO will be async

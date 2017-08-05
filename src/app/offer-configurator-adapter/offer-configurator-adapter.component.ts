@@ -90,9 +90,9 @@ export class OfferConfiguratorAdapterComponent {
 
   featureGroupDefinitions$: Observable<FeatureGroupDefinition[]> = this.featureService.selectFeatureGroupDefinitions$();
 
-  variants$: Observable<Variant[]> = this.variantService.select$('variants');
+  variants$: Observable<Variant[]> = this.variantService.variants$;
 
-  selectedVariantId$: Observable<string> = this.variantService.select$('selectedVariantId');
+  selectedVariantId$: Observable<string> = this.variantService.selectedVariant$.map(variant => variant.id);
 
   formColumns$: Observable<FormColumn[]> = this.variants$
     .combineLatest(
