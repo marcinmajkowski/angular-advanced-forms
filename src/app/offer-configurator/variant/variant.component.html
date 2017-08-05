@@ -9,37 +9,36 @@
       <p>{{ column.subtitle }}</p>
     </div>
     <hr/>
-    <div *ngFor="let field of column.fields; trackBy: trackByFn; let i = index; ">
-      <!-- TODO switch case -->
-      <ng-container *ngIf="isSpacerField(field)">
-        <h5>&nbsp;</h5>
-      </ng-container>
-      <ng-container *ngIf="isStaticTextField(field)">
-        <div class="form-group">
-          <p class="form-control-like">
-            <!-- TODO improve field typing -->
-            {{ field.text }}
-          </p>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="isNumberInputField(field)">
-        <div [class.has-danger]="valueInput.invalid"
-             class="form-group">
-          <input class="form-control text-center"
-                 type="number"
-                 [min]="field.min"
-                 [appMin]="field.min"
-                 [max]="field.max"
-                 [appMax]="field.max"
-                 [ngModel]="field.value"
-                 (ngModelChange)="onFieldValueNgModelChange(field.id, $event)"
-                 name="{{column.id}}-{{field.id}}-field"
-                 required
-                 (change)="onChange()"
-                 #valueInput="ngModel"
-                 [readonly]="column.isDisabled">
-        </div>
-      </ng-container>
+    <div
+      *ngFor="let field of column.fields; trackBy: trackByFn; let i = index; "
+      [ngSwitch]="field.kind">
+
+      <h5 *ngSwitchCase="'spacer'">&nbsp;</h5>
+
+      <div *ngSwitchCase="'staticText'" class="form-group">
+        <p class="form-control-like">
+          {{ field.text }}
+        </p>
+      </div>
+
+      <div *ngSwitchCase="'numberInput'"
+           [class.has-danger]="valueInput.invalid"
+           class="form-group">
+        <input class="form-control text-center"
+               type="number"
+               [min]="field.min"
+               [appMin]="field.min"
+               [max]="field.max"
+               [appMax]="field.max"
+               [ngModel]="field.value"
+               (ngModelChange)="onFieldValueNgModelChange(field.id, $event)"
+               name="{{column.id}}-{{field.id}}-field"
+               required
+               (change)="onChange()"
+               #valueInput="ngModel"
+               [readonly]="column.isDisabled">
+      </div>
+
     </div>
     <hr/>
     <div>

@@ -13,7 +13,7 @@ import { FeatureGroupDefinition } from '../feature/feature-group-definition.mode
 import { FeatureGroup } from '../feature/feature-group.model';
 import {
   FormColumnField,
-  NumberInputFormColumnField,
+  NumberInputFormColumnField, SpacerFormColumnField,
   StaticTextFormColumnField
 } from './variant/form-column-field.model';
 import { FeatureDefinition } from '../feature/feature-definition.model';
@@ -40,21 +40,21 @@ function columnFromVariant(variant: Variant, selectedVariantId: string, featureG
 function fieldsFromFeatureGroups(featureGroups: FeatureGroup[], featureGroupDefinitions: FeatureGroupDefinition[]): FormColumnField[] {
   const fields: FormColumnField[] = [];
   featureGroupDefinitions.forEach(featureGroupDefinition => {
-    fields.push({id: null, type: 'SPACER'});
+    fields.push(<SpacerFormColumnField>{kind: 'spacer', id: null});
     featureGroupDefinition.features.forEach(featureDefinition => {
       const feature = featureForDefinition(featureGroups, featureGroupDefinition, featureDefinition);
       switch (featureDefinition.variantFieldType) {
         case VariantFieldType.STATIC_VALUE:
           fields.push(<StaticTextFormColumnField>{
+            kind: 'staticText',
             id: feature.name,
-            type: 'STATIC_TEXT',
             text: feature.value ? feature.value.toString() : ''
           });
           break;
         case VariantFieldType.INPUT:
           fields.push(<NumberInputFormColumnField>{
+            kind: 'numberInput',
             id: feature.name,
-            type: 'NUMBER_INPUT',
             value: feature.value,
             min: feature.min,
             max: feature.max,

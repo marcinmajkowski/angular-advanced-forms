@@ -33,18 +33,6 @@ export class VariantComponent {
     });
   }
 
-  isNumberInputField(field: FormColumnField) {
-    return field.type === 'NUMBER_INPUT';
-  }
-
-  isStaticTextField(field: FormColumnField) {
-    return field.type === 'STATIC_TEXT';
-  }
-
-  isSpacerField(field: FormColumnField) {
-    return field.type === 'SPACER';
-  }
-
   trackByFn(index, item) {
     return index;
   }

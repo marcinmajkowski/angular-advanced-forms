@@ -1,18 +1,19 @@
-export type FormColumnFieldType
-  = 'STATIC_TEXT'
-  | 'NUMBER_INPUT'
-  | 'SPACER';
+export type FormColumnField = SpacerFormColumnField | StaticTextFormColumnField | NumberInputFormColumnField;
 
-export interface FormColumnField {
+export interface SpacerFormColumnField {
+  kind: 'spacer';
   id: string;
-  type: FormColumnFieldType;
 }
 
-export interface StaticTextFormColumnField extends FormColumnField {
+export interface StaticTextFormColumnField {
+  kind: 'staticText';
+  id: string;
   text?: string;
 }
 
-export interface NumberInputFormColumnField extends FormColumnField {
+export interface NumberInputFormColumnField {
+  kind: 'numberInput';
+  id: string;
   value: number;
   min?: number;
   max?: number;
