@@ -7,6 +7,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
 import { Variant } from './variant.model';
 import { VariantFeature } from './variant-feature.model';
+import { FeatureConstraintsService } from '../feature/feature-constraints.service';
 
 function sampleVariantFeatures(): VariantFeature[] {
   return [{
@@ -17,7 +18,7 @@ function sampleVariantFeatures(): VariantFeature[] {
     value: 200,
   }, {
     definitionId: '3',
-    value: 300,
+    value: 30,
   }, {
     definitionId: '4',
     value: 400,
@@ -66,7 +67,9 @@ export class VariantService {
   private subject = new BehaviorSubject<State>(initialState);
   private store = this.subject.asObservable().distinctUntilChanged();
 
-  constructor(private variantPriceService: VariantPriceService) {
+  constructor(private variantPriceService: VariantPriceService,
+              private featureConstraintsService: FeatureConstraintsService) {
+    this.subject.value.variants.forEach(variant => this.updateVariantConstraints(variant.id));
     this.subject.value.variants.forEach(variant => this.calculateVariant(variant.id));
   }
 
@@ -100,16 +103,41 @@ export class VariantService {
       ...state,
       variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
     });
+    this.updateVariantConstraints(variantId);
   }
 
   public calculateVariant(variantId: string) {
-    // TODO check constraints
     const variant = this.subject.value.variants.find(variant => variant.id === variantId);
-    this.updateVariantIsDisabled(variantId, true);
-    this.variantPriceService.calculatePrice$(variant)
-      .do(price => this.updateVariantPrice(variantId, price))
-      .finally(() => this.updateVariantIsDisabled(variantId, false))
-      .subscribe();
+    if (this.isValidVariant(variant)) {
+      this.updateVariantIsDisabled(variantId, true);
+      this.variantPriceService.calculatePrice$(variant)
+        .do(price => this.updateVariantPrice(variantId, price))
+        .finally(() => this.updateVariantIsDisabled(variantId, false))
+        .subscribe();
+    }
+  }
+
+  private isValidVariant(variant: Variant): boolean {
+    return variant.features.every(feature => this.isValidFeature(feature));
+  }
+
+  private isValidFeature(feature: VariantFeature): boolean {
+    const min = feature.constraints.min;
+    if (min && feature.value < min) {
+      return false;
+    }
+
+    const max = feature.constraints.max;
+    if (max && feature.value > max) {
+      return false;
+    }
+
+    const required = feature.constraints.required;
+    if (required && feature.value === null) {
+      return false;
+    }
+
+    return true;
   }
 
   private updateVariantPrice(variantId: string, newPrice: number) {
@@ -132,6 +160,27 @@ export class VariantService {
     const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
     const variant = state.variants[variantIndex];
     const newVariant = {...variant, isDisabled: isDisabled};
+    this.subject.next({
+      ...state,
+      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
+    });
+  }
+
+  private updateVariantConstraints(variantId: string) {
+    const state = this.subject.value;
+    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
+    const variant = state.variants[variantIndex];
+    const featureDefinitionIdToValue = variant.features.reduce((map, feature) => {
+      map[feature.definitionId] = feature.value;
+      return map;
+    }, {});
+    const featureDefinitionIdToConstraints = this.featureConstraintsService.constraintsForValues(featureDefinitionIdToValue);
+    const newFeatures = variant.features
+      .map(feature => ({
+        ...feature,
+        constraints: featureDefinitionIdToConstraints[feature.definitionId] || {min: null, max: null, required: false}
+      }));
+    const newVariant = {...variant, features: newFeatures};
     this.subject.next({
       ...state,
       variants: Object.assign([...state.variants], {[variantIndex]: newVariant})

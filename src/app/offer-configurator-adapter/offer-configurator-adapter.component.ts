@@ -60,10 +60,9 @@ function fieldsVariantFeatures(features: VariantFeature[], featureGroupDefinitio
             kind: 'numberInput',
             id: feature.definitionId,
             value: feature.value,
-            // TODO
-            min: null,
-            max: null,
-            required: true
+            min: feature.constraints.min,
+            max: feature.constraints.max,
+            required: feature.constraints.required
           });
           break;
       }
