@@ -49,6 +49,7 @@ function sampleVariants(): Variant[] {
   }];
 }
 
+// TODO add constraints to state
 interface State {
   variants: Variant[];
   selectedVariantId: string;
@@ -63,62 +64,77 @@ const initialState: State = {
 export class VariantService {
 
   private subject = new BehaviorSubject<State>(initialState);
-  store = this.subject.asObservable().distinctUntilChanged();
+  private store = this.subject.asObservable().distinctUntilChanged();
 
-  // FIXME update limits on initialization
-  constructor(private variantPriceService: VariantPriceService) { }
+  constructor(private variantPriceService: VariantPriceService) {
+    this.subject.value.variants.forEach(variant => this.calculateVariant(variant.id));
+  }
 
-  get variants$(): Observable<Variant[]> {
+  public get variants$(): Observable<Variant[]> {
     return this.store.pluck('variants');
   }
 
-  get selectedVariant$(): Observable<Variant> {
+  public get selectedVariant$(): Observable<Variant> {
     return this.store.map(state => state.variants.find(variant => variant.id === state.selectedVariantId));
   }
 
-  // TODO will be async
-  updateSelectedVariantId(variantId: string) {
+  public updateSelectedVariantId(variantId: string) {
     const value = this.subject.value;
     this.subject.next({...value, selectedVariantId: variantId});
   }
 
-  updateFeatureValue(variantId: string, featureDefinitionId: string, newValue: number) {
-    const value = this.subject.value;
-    const variantIndex = value.variants.findIndex(variant => variant.id === variantId);
-    const variantMutable = <Variant>JSON.parse(JSON.stringify(value.variants[variantIndex]));
-    variantMutable.features.find(feature => feature.definitionId === featureDefinitionId).value = newValue;
+  public updateFeatureValue(variantId: string, featureDefinitionId: string, newValue: number) {
+    const state = this.subject.value;
+    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
+    const variant = state.variants[variantIndex];
+    const featureIndex = variant.features.findIndex(feature => feature.definitionId === featureDefinitionId);
+    const feature = variant.features[featureIndex];
+
+    const newFeature = <VariantFeature>{...feature, value: newValue};
+    const newVariant = <Variant>{
+      ...variant,
+      features: Object.assign([], variant.features, {[featureIndex]: newFeature}),
+      price: null
+    };
     this.subject.next({
-      ...value,
-      variants: Object.assign([], value.variants, {[variantIndex]: variantMutable})
+      ...state,
+      variants: Object.assign([], state.variants, {[variantIndex]: newVariant})
     });
   }
 
-  calculateVariant(variantId: string) {
-    const variantToCalculate = this.subject.value.variants.find(variant => variant.id === variantId);
-    this.setDisabled(variantId, true);
-    this.variantPriceService.calculatePrice$(variantToCalculate)
-      .do(variant => this.saveVariant(variant))
-      .finally(() => this.setDisabled(variantId, false))
+  public calculateVariant(variantId: string) {
+    // TODO check constraints
+    const variant = this.subject.value.variants.find(variant => variant.id === variantId);
+    this.updateVariantIsDisabled(variantId, true);
+    this.variantPriceService.calculatePrice$(variant)
+      .do(price => this.updateVariantPrice(variantId, price))
+      .finally(() => this.updateVariantIsDisabled(variantId, false))
       .subscribe();
   }
 
-  private setDisabled(variantId: string, isDisabled: boolean) {
-    const value = this.subject.value;
-    const variantIndex = value.variants.findIndex(v => v.id === variantId);
-    const variant = value.variants[variantIndex];
-    const updatedVariant = {...variant, isDisabled: isDisabled};
+  private updateVariantPrice(variantId: string, newPrice: number) {
+    const state = this.subject.value;
+    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
+    const variant = state.variants[variantIndex];
+
+    const newVariant = <Variant>{
+      ...variant,
+      price: newPrice
+    };
     this.subject.next({
-      ...value,
-      variants: Object.assign([], value.variants, {[variantIndex]: updatedVariant})
+      ...state,
+      variants: Object.assign([], state.variants, {[variantIndex]: newVariant})
     });
   }
 
-  private saveVariant(variant: Variant) {
-    const value = this.subject.value;
-    const variantIndex = value.variants.findIndex(v => v.id === variant.id);
+  private updateVariantIsDisabled(variantId: string, isDisabled: boolean) {
+    const state = this.subject.value;
+    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
+    const variant = state.variants[variantIndex];
+    const newVariant = {...variant, isDisabled: isDisabled};
     this.subject.next({
-      ...value,
-      variants: Object.assign([], value.variants, {[variantIndex]: variant})
+      ...state,
+      variants: Object.assign([], state.variants, {[variantIndex]: newVariant})
     });
   }
 }
