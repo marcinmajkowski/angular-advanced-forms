@@ -88,8 +88,7 @@ export class VariantService {
 
   public updateFeatureValue(variantId: string, featureDefinitionId: string, newValue: number) {
     const state = this.subject.value;
-    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
-    const variant = state.variants[variantIndex];
+    const variant = state.variants.find(variant => variant.id === variantId);
     const featureIndex = variant.features.findIndex(feature => feature.definitionId === featureDefinitionId);
     const feature = variant.features[featureIndex];
 
@@ -99,10 +98,7 @@ export class VariantService {
       features: Object.assign([], variant.features, {[featureIndex]: newFeature}),
       price: null
     };
-    this.subject.next({
-      ...state,
-      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
-    });
+    this.subject.next(replaceVariant(state, newVariant));
     this.updateVariantConstraints(variantId);
   }
 
@@ -142,34 +138,24 @@ export class VariantService {
 
   private updateVariantPrice(variantId: string, newPrice: number) {
     const state = this.subject.value;
-    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
-    const variant = state.variants[variantIndex];
-
+    const variant = state.variants.find(variant => variant.id === variantId);
     const newVariant = <Variant>{
       ...variant,
       price: newPrice
     };
-    this.subject.next({
-      ...state,
-      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
-    });
+    this.subject.next(replaceVariant(state, newVariant));
   }
 
   private updateVariantIsDisabled(variantId: string, isDisabled: boolean) {
     const state = this.subject.value;
-    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
-    const variant = state.variants[variantIndex];
+    const variant = state.variants.find(variant => variant.id === variantId);
     const newVariant = {...variant, isDisabled: isDisabled};
-    this.subject.next({
-      ...state,
-      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
-    });
+    this.subject.next(replaceVariant(state, newVariant));
   }
 
   private updateVariantConstraints(variantId: string) {
     const state = this.subject.value;
-    const variantIndex = state.variants.findIndex(variant => variant.id === variantId);
-    const variant = state.variants[variantIndex];
+    const variant = state.variants.find(variant => variant.id === variantId);
     const featureDefinitionIdToValue = variant.features.reduce((map, feature) => {
       map[feature.definitionId] = feature.value;
       return map;
@@ -181,9 +167,14 @@ export class VariantService {
         constraints: featureDefinitionIdToConstraints[feature.definitionId] || {min: null, max: null, required: false}
       }));
     const newVariant = {...variant, features: newFeatures};
-    this.subject.next({
-      ...state,
-      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
-    });
+    this.subject.next(replaceVariant(state, newVariant));
   }
+}
+
+function replaceVariant(state: State, newVariant: Variant): State {
+  const variantIndex = state.variants.findIndex(variant => variant.id === newVariant.id);
+  return {
+    ...state,
+    variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
+  };
 }
