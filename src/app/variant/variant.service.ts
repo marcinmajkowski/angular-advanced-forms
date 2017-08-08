@@ -98,7 +98,7 @@ export class VariantService {
     };
     this.subject.next({
       ...state,
-      variants: Object.assign([], state.variants, {[variantIndex]: newVariant})
+      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
     });
   }
 
@@ -123,7 +123,7 @@ export class VariantService {
     };
     this.subject.next({
       ...state,
-      variants: Object.assign([], state.variants, {[variantIndex]: newVariant})
+      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
     });
   }
 
@@ -134,7 +134,7 @@ export class VariantService {
     const newVariant = {...variant, isDisabled: isDisabled};
     this.subject.next({
       ...state,
-      variants: Object.assign([], state.variants, {[variantIndex]: newVariant})
+      variants: Object.assign([...state.variants], {[variantIndex]: newVariant})
     });
   }
 }
