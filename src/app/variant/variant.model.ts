@@ -1,9 +1,9 @@
-import { FeatureGroup } from '../feature/feature-group.model';
+import { VariantFeature } from './variant-feature.model';
 
 export interface Variant {
   id: string;
   name: string;
   isDisabled: boolean;
-  featureGroups: FeatureGroup[];
+  features: VariantFeature[];
   price: number;
 }

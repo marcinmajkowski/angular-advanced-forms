@@ -8,14 +8,14 @@ import { VariantService } from '../variant/variant.service';
 import { FeatureService } from '../feature/feature.service';
 import { Observable } from 'rxjs/Observable';
 import { FeatureGroupDefinition } from '../feature/feature-group-definition.model';
-import { FeatureGroup } from '../feature/feature-group.model';
 import { FeatureDefinition } from '../feature/feature-definition.model';
-import { Feature } from '../feature/feature.model';
 import { VariantFieldType } from '../feature/variant-field-type.enum';
 import { Variant } from '../variant/variant.model';
 import { FormColumn } from '../configurator/form-column/form-column.model';
 import {
-  FormColumnField, NumberInputFormColumnField, SpacerFormColumnField,
+  FormColumnField,
+  NumberInputFormColumnField,
+  SpacerFormColumnField,
   StaticTextFormColumnField
 } from '../configurator/form-column/form-column-field.model';
 import { Column } from '../configurator/column.interface';
@@ -24,6 +24,7 @@ import {
   SectionHeaderLabelColumnField
 } from '../configurator/label-column/label-column-field.model';
 import { LabelColumn } from '../configurator/label-column/label-column.model';
+import { VariantFeature } from '../variant/variant-feature.model';
 
 // TODO move mapping code to facade
 
@@ -36,31 +37,32 @@ function columnFromVariant(variant: Variant, selectedVariantId: string, featureG
     summary: variant.price ? `\$${variant.price}` : '-',
     isSelected: variant.id === selectedVariantId,
     isDisabled: variant.isDisabled,
-    fields: fieldsFromFeatureGroups(variant.featureGroups, featureGroupDefinitions)
+    fields: fieldsVariantFeatures(variant.features, featureGroupDefinitions)
   };
 }
 
-function fieldsFromFeatureGroups(featureGroups: FeatureGroup[], featureGroupDefinitions: FeatureGroupDefinition[]): FormColumnField[] {
+function fieldsVariantFeatures(features: VariantFeature[], featureGroupDefinitions: FeatureGroupDefinition[]): FormColumnField[] {
   const fields: FormColumnField[] = [];
   featureGroupDefinitions.forEach(featureGroupDefinition => {
     fields.push(<SpacerFormColumnField>{kind: 'spacer', id: null});
     featureGroupDefinition.features.forEach(featureDefinition => {
-      const feature = featureForDefinition(featureGroups, featureGroupDefinition, featureDefinition);
+      const feature = featureForDefinition(features, featureDefinition);
       switch (featureDefinition.variantFieldType) {
         case VariantFieldType.STATIC_VALUE:
           fields.push(<StaticTextFormColumnField>{
             kind: 'staticText',
-            id: feature.name,
+            id: feature.definitionId,
             text: feature.value ? feature.value.toString() : ''
           });
           break;
         case VariantFieldType.INPUT:
           fields.push(<NumberInputFormColumnField>{
             kind: 'numberInput',
-            id: feature.name,
+            id: feature.definitionId,
             value: feature.value,
-            min: feature.min,
-            max: feature.max,
+            // TODO
+            min: null,
+            max: null,
             required: true
           });
           break;
@@ -70,13 +72,10 @@ function fieldsFromFeatureGroups(featureGroups: FeatureGroup[], featureGroupDefi
   return fields;
 }
 
-function featureForDefinition(featureGroups: FeatureGroup[],
-                              featureGroupDefinition: FeatureGroupDefinition,
-                              featureDefinition: FeatureDefinition): Feature {
-  return featureGroups
-    .find(featureGroup => featureGroup.name === featureGroupDefinition.name)
-    .features
-    .find(feature => feature.name === featureDefinition.name);
+function featureForDefinition(features: VariantFeature[],
+                              featureDefinition: FeatureDefinition): VariantFeature {
+  return features
+    .find(feature => feature.definitionId === featureDefinition.id);
 }
 
 function variantIdFromColumn(formColumn: FormColumn) {
@@ -148,17 +147,7 @@ export class OfferConfiguratorAdapterComponent {
     }
   }
 
-  // TODO refactor
   onFieldValueChange(column: FormColumn, event: {fieldId: string, value: any}) {
-    Observable.of(true)
-      .withLatestFrom(this.variants$, (_, variants) => {
-        const variantIndex = variants.findIndex(variant => variant.id === column.id);
-        const featureGroupIndex = variants[variantIndex].featureGroups
-          .findIndex(featureGroup => !!featureGroup.features
-            .find(feature => feature.name === event.fieldId));
-        const featureIndex = variants[variantIndex].featureGroups[featureGroupIndex].features
-          .findIndex(feature => feature.name === event.fieldId);
-        this.variantService.updateFeatureValue(variantIndex, featureGroupIndex, featureIndex, event.value);
-      }).subscribe();
+    this.variantService.updateFeatureValue(column.id, event.fieldId, event.value);
   }
 }

@@ -42,6 +42,42 @@ export class FeatureService {
   }
 
   constraints(featureIdToValue: {[featureId: string]: any}): {[featureId: string]: FeatureConstraints} {
-    return null;
+    const featureIdToContraints = {};
+
+    featureIdToContraints['1'] = {
+      min: null,
+      max: null,
+      required: true
+    };
+
+    // Feature two value should be 1 - 2 of feature one
+    const featureOneValue = featureIdToValue['1'];
+    featureIdToContraints['2'] = {
+      min: featureOneValue ? featureOneValue : null,
+      max: featureOneValue ? featureOneValue * 2 : null,
+      required: true
+    };
+
+    // Feature three value should be 0 - 0.5 of feature two
+    const featureTwoValue = featureIdToValue['2'];
+    featureIdToContraints['3'] = {
+      min: featureTwoValue ? 0 : null,
+      max: featureTwoValue ? featureTwoValue * 0.5 : null,
+      required: true
+    };
+
+    featureIdToContraints['4'] = {
+      min: null,
+      max: null,
+      required: true
+    };
+
+    featureIdToContraints['5'] = {
+      min: null,
+      max: null,
+      required: true
+    };
+
+    return featureIdToContraints;
   }
 }

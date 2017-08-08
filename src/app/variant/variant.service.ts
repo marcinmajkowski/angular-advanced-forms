@@ -1,49 +1,29 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { FeatureGroup } from '../feature/feature-group.model';
 import 'rxjs/add/operator/pluck';
 import { VariantPriceService } from './variant-price.service';
-import { VariantLimitsService } from './variant-limits.service';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
 import { Variant } from './variant.model';
+import { VariantFeature } from './variant-feature.model';
 
-function sampleFeatureGroups(): FeatureGroup[] {
+function sampleVariantFeatures(): VariantFeature[] {
   return [{
-    name: 'First group',
-    features: [{
-      name: 'Feature one',
-      description: 'No limits',
-      value: 100,
-      min: null,
-      max: null,
-    }, {
-      name: 'Feature two',
-      description: '1 - 2 of feature one',
-      value: 200,
-      min: null,
-      max: null,
-    }]
+    definitionId: '1',
+    value: 100,
   }, {
-    name: 'Second group',
-    features: [{
-      name: 'Feature three',
-      description: '0 - 0.5 of feature two',
-      value: 300,
-      min: null,
-      max: null,
-    }, {
-      name: 'Feature four',
-      value: 400,
-      min: null,
-      max: null,
-    }, {
-      name: 'Feature five',
-      value: 500,
-      min: null,
-      max: null,
-    }]
+    definitionId: '2',
+    value: 200,
+  }, {
+    definitionId: '3',
+    value: 300,
+  }, {
+    definitionId: '4',
+    value: 400,
+  }, {
+    definitionId: '5',
+    value: 500,
   }];
 }
 
@@ -52,19 +32,19 @@ function sampleVariants(): Variant[] {
     id: '1',
     name: 'First',
     isDisabled: false,
-    featureGroups: sampleFeatureGroups(),
+    features: sampleVariantFeatures(),
     price: null,
   }, {
     id: '2',
     name: 'Second',
     isDisabled: false,
-    featureGroups: sampleFeatureGroups(),
+    features: sampleVariantFeatures(),
     price: null,
   }, {
     id: '3',
     name: 'Third',
     isDisabled: false,
-    featureGroups: sampleFeatureGroups(),
+    features: sampleVariantFeatures(),
     price: null,
   }];
 }
@@ -86,8 +66,7 @@ export class VariantService {
   store = this.subject.asObservable().distinctUntilChanged();
 
   // FIXME update limits on initialization
-  constructor(private variantPriceService: VariantPriceService,
-              private variantLimitsService: VariantLimitsService) { }
+  constructor(private variantPriceService: VariantPriceService) { }
 
   get variants$(): Observable<Variant[]> {
     return this.store.pluck('variants');
@@ -103,11 +82,11 @@ export class VariantService {
     this.subject.next({...value, selectedVariantId: variantId});
   }
 
-  updateFeatureValue(variantIndex: number, featureGroupIndex: number, featureIndex: number, newValue: number) {
+  updateFeatureValue(variantId: string, featureDefinitionId: string, newValue: number) {
     const value = this.subject.value;
+    const variantIndex = value.variants.findIndex(variant => variant.id === variantId);
     const variantMutable = <Variant>JSON.parse(JSON.stringify(value.variants[variantIndex]));
-    variantMutable.featureGroups[featureGroupIndex].features[featureIndex].value = newValue;
-    this.variantLimitsService.calculateLimits(variantMutable);
+    variantMutable.features.find(feature => feature.definitionId === featureDefinitionId).value = newValue;
     this.subject.next({
       ...value,
       variants: Object.assign([], value.variants, {[variantIndex]: variantMutable})
