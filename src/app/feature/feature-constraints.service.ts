@@ -21,12 +21,12 @@ export class FeatureConstraintsService {
       required: true
     };
 
-    // Feature three value should be 0 - 0.5 of feature two
+    // Feature three value should be 0 - 0.5 of feature two and its optional
     const featureTwoValue = featureDefinitionIdToValue['2'];
     featureDefinitionIdToConstraints['3'] = {
       min: featureTwoValue ? 0 : null,
       max: featureTwoValue ? featureTwoValue * 0.5 : null,
-      required: true
+      required: false
     };
 
     featureDefinitionIdToConstraints['4'] = {

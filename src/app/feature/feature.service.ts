@@ -14,7 +14,7 @@ const featureGroupDefinitions: FeatureGroupDefinition[] = [{
 }, {
   name: 'Second group',
   features: [
-    {id: '3', name: 'Feature three', description: '0 - 0.5 of feature two', variantFieldType: VariantFieldType.INPUT},
+    {id: '3', name: 'Feature three', description: '0 - 0.5 of feature two, optional', variantFieldType: VariantFieldType.INPUT},
     {id: '4', name: 'Feature four', variantFieldType: VariantFieldType.STATIC_VALUE},
     {id: '5', name: 'Feature five', variantFieldType: VariantFieldType.STATIC_VALUE},
   ]

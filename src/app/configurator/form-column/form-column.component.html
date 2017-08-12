@@ -33,7 +33,7 @@
                [ngModel]="field.value"
                (ngModelChange)="onFieldValueNgModelChange(field, $event)"
                name="{{column.id}}-{{field.id}}-field"
-               required
+               [required]="field.required"
                (change)="onChange(field)"
                #valueInput="ngModel"
                [readonly]="column.isDisabled">
