@@ -1,4 +1,5 @@
 <form (ngSubmit)="onSelect()"
+      class="was-validated"
       #form="ngForm"
       novalidate>
   <div class="text-center variant-column rounded p-3"
@@ -22,7 +23,6 @@
       </div>
 
       <div *ngSwitchCase="'numberInput'"
-           [class.has-danger]="valueInput.invalid"
            class="form-group">
         <input class="form-control text-center"
                type="number"
@@ -45,7 +45,7 @@
       <h5>{{ column.summary }}</h5>
       <button class="btn btn-block"
               [class.btn-primary]="column.isSelected"
-              [class.btn-secondary]="!column.isSelected"
+              [class.btn-outline-secondary]="!column.isSelected"
               [disabled]="column.isDisabled">
         {{ column.isSelected ? '✓' : 'Select' }}
       </button>
