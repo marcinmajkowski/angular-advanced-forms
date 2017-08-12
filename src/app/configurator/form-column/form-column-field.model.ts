@@ -1,4 +1,8 @@
-export type FormColumnField = SpacerFormColumnField | StaticTextFormColumnField | NumberInputFormColumnField;
+export type FormColumnField
+  = SpacerFormColumnField
+  | StaticTextFormColumnField
+  | NumberInputFormColumnField
+  | SectionCheckboxInputFormColumnField;
 
 export interface SpacerFormColumnField {
   kind: 'spacer';
@@ -17,5 +21,12 @@ export interface NumberInputFormColumnField {
   value: number;
   min?: number;
   max?: number;
+  required?: boolean;
+}
+
+export interface SectionCheckboxInputFormColumnField {
+  kind: 'sectionCheckboxInput';
+  id: string;
+  value: boolean;
   required?: boolean;
 }

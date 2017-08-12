@@ -13,6 +13,7 @@ import { VariantFieldType } from '../feature/variant-field-type.enum';
 import { Variant } from '../variant/variant.model';
 import { FormColumn } from '../configurator/form-column/form-column.model';
 import {
+  SectionCheckboxInputFormColumnField,
   FormColumnField,
   NumberInputFormColumnField,
   SpacerFormColumnField,
@@ -44,7 +45,12 @@ function columnFromVariant(variant: Variant, selectedVariantId: string, featureG
 function fieldsVariantFeatures(features: VariantFeature[], featureGroupDefinitions: FeatureGroupDefinition[]): FormColumnField[] {
   const fields: FormColumnField[] = [];
   featureGroupDefinitions.forEach(featureGroupDefinition => {
-    fields.push(<SpacerFormColumnField>{kind: 'spacer', id: null});
+    if (featureGroupDefinition.hasGroupCheck) {
+      // TODO id and value
+      fields.push(<SectionCheckboxInputFormColumnField>{kind: 'sectionCheckboxInput', id: featureGroupDefinition.name, value: true});
+    } else {
+      fields.push(<SpacerFormColumnField>{kind: 'spacer', id: null});
+    }
     featureGroupDefinition.features.forEach(featureDefinition => {
       const feature = featureForDefinition(features, featureDefinition);
       switch (featureDefinition.variantFieldType) {
