@@ -45,7 +45,10 @@
         <div class="form-check mb-0">
           <label class="custom-control custom-checkbox ml-2 mr-0 mb-0">
             <input type="checkbox"
-                   class="custom-control-input">
+                   class="custom-control-input"
+                   name="{{column.id}}-{{field.id}}-field"
+                   [ngModel]="field.value"
+                   (ngModelChange)="onFieldValueNgModelChange(field, $event)">
             <span class="custom-control-indicator"></span>
           </label>
         </div>

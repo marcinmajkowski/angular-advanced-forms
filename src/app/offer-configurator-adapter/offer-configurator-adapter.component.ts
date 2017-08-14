@@ -147,8 +147,13 @@ export class OfferConfiguratorAdapterComponent {
   }
 
   onColumnFieldValueChange(event: { column: FormColumn, field: FormColumnField }) {
-    if (event.field.kind === 'numberInput') {
-      this.onFieldValueChange(event.column, {fieldId: event.field.id, value: event.field.value});
+    switch (event.field.kind) {
+      case 'numberInput':
+        this.onFieldValueChange(event.column, {fieldId: event.field.id, value: event.field.value});
+        break;
+      case 'sectionCheckboxInput':
+        console.log('TODO checkboxInput ' + event.field.value);
+        break;
     }
   }
 

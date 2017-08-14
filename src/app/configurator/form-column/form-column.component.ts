@@ -26,7 +26,7 @@ export class FormColumnComponent {
     this.fieldEditingComplete.emit(field);
   }
 
-  onFieldValueNgModelChange(field: NumberInputFormColumnField, value: number) {
+  onFieldValueNgModelChange(field: NumberInputFormColumnField, value: any) {
     this.fieldValueChange.emit({
       ...field,
       value: value
