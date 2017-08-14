@@ -1,5 +1,4 @@
 <form (ngSubmit)="onSelect()"
-      class="was-validated"
       #form="ngForm"
       novalidate>
   <div class="text-center variant-column rounded p-3"
@@ -25,6 +24,7 @@
       <div *ngSwitchCase="'numberInput'"
            class="form-group">
         <input class="form-control text-center"
+               [class.is-invalid]="valueInput.invalid"
                type="number"
                [min]="field.min"
                [appMin]="field.min"
