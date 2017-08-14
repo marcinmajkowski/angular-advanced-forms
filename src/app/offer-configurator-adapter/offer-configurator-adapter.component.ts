@@ -136,7 +136,7 @@ export class OfferConfiguratorAdapterComponent {
   constructor(private featureService: FeatureService,
               private variantService: VariantService) { }
 
-  onColumnSelect(column: Column) {
+  onColumnChoose(column: Column) {
     if (column.kind === 'form') {
       this.variantService.updateSelectedVariantId(variantIdFromColumn(column));
     }

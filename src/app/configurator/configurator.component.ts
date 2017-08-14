@@ -11,7 +11,7 @@ export class ConfiguratorComponent {
 
   @Input() columns: Column[];
 
-  @Output() columnSelect = new EventEmitter<Column>();
+  @Output() columnChoose = new EventEmitter<Column>();
 
   @Output() columnFieldEditingComplete = new EventEmitter<{ column: FormColumn, field: FormColumnField }>();
 
@@ -32,8 +32,8 @@ export class ConfiguratorComponent {
     });
   }
 
-  onSelect(column: Column) {
-    this.columnSelect.emit(column);
+  onChoose(column: Column) {
+    this.columnChoose.emit(column);
   }
 
   trackByFn(index, item) {

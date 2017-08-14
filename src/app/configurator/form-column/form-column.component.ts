@@ -12,14 +12,14 @@ export class FormColumnComponent {
 
   @Input() column: FormColumn;
 
-  @Output() select = new EventEmitter<void>();
+  @Output() choose = new EventEmitter<void>();
 
   @Output() fieldEditingComplete = new EventEmitter<FormColumnField>();
 
   @Output() fieldValueChange = new EventEmitter<FormColumnField>();
 
-  onSelect() {
-    this.select.emit();
+  onChoose() {
+    this.choose.emit();
   }
 
   onChange(field: FormColumnField) {
